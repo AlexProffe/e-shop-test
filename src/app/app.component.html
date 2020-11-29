@@ -1,0 +1,37 @@
+<!--<app-header>-->
+
+<!--</app-header>-->
+
+<!--<app-main>-->
+
+<!--</app-main>-->
+
+<!--<app-footer>-->
+
+<!--</app-footer>-->
+
+
+
+<button  (click)="addObject()">
+  Add
+</button>
+
+<button  (click)="createObject()">
+  Check
+</button>
+<button  (click)="updateObject()">
+  Update
+</button>
+<button  (click)="deleteObject()">
+  Delete
+
+</button>
+
+
+<button  (click)="login()">
+  login
+
+</button>
+
+{{(authService.user$ | async).email}}
+

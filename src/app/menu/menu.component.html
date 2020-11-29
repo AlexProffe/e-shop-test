@@ -1,0 +1,23 @@
+<nav>
+  <ul class="header__menu">
+    <app-menu-item
+      *ngFor="let menuItem of menuItems"
+      [menuLink]="menuItem"
+    >
+    </app-menu-item>
+  </ul>
+  <div class="cart-icon">
+    <app-icon-link
+      [link]="cartLink"
+      [icon]="cartIcon"
+    >
+
+    </app-icon-link>
+    <app-cart-count
+      [link]="cartCountLink"
+    >
+
+    </app-cart-count>
+  </div>
+
+</nav>

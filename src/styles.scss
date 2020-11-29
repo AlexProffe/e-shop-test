@@ -1,0 +1,283 @@
+/* You can add global styles to this file, and also import other style files */
+
+
+/* Очистка базовых стилей браузера */
+*{padding: 0;margin: 0;border: 0; box-sizing: border-box; font-family: 'Roboto', sans-serif;}
+*,*:before,*:after{box-sizing: border-box;}
+:focus,:active{outline: none;}
+a:focus,a:active{outline: none;}
+nav,footer,header,aside{display: block;}
+html,body{height: 100%;width: 100%;font-size: 100%;line-height: 1;font-size: 16px;-ms-text-size-adjust: 100%;-moz-text-size-adjust: 100%;-webkit-text-size-adjust: 100%;}
+input,button,textarea{font-family:inherit;}
+input::-ms-clear{display: none;}
+button{cursor: pointer;}
+button::-moz-focus-inner {padding:0;border:0;}
+a, a:visited{text-decoration: none;}
+a:hover{text-decoration: none;}
+ul li{list-style: none;}
+img{vertical-align: top; max-width: 100%; height: auto;}
+h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight: 400;}
+
+/* Общие классы */
+.container{
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+}
+.link--hover--big{
+  text-transform: uppercase;
+  &:hover{
+    color:#67c434;
+  }
+}
+
+/* Шапка */
+header{
+  .header__panel{
+    background-color: #fafafa;
+    padding: 15px 0;
+    .container{
+      display: flex;
+      justify-content: flex-end;
+    }
+    &__item{
+      display: flex;
+      justify-content: space-between;
+      width: 300px;
+      align-items: center;
+      &__wishlist{
+        a{
+          color:#959595;
+          min-width: 130px;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 14px;
+          font-family: 'Roboto', sans-serif;
+          &:hover{
+            color:#67c434;
+            span{
+              color:#67c434;
+            }
+          }
+          span{
+            color:#e1e1e1;
+            margin-left: 3px;
+          }
+        }
+      }
+      &__account{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .account{
+          &__login{
+            min-width: 75px;
+            color:#959595;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 16px;
+            &:hover{
+              color:#67c434;
+              span{
+                color:#67c434;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .header__navigation{
+    padding: 50px 0;
+    .container{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &__logo{
+      max-width: 150px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    nav{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      min-width: 400px;
+      max-width: 700px;
+      position: relative;
+      .cart__link{
+        margin-left: 30px;
+        padding:20px 10px ;
+      }
+      .cart-circle{
+        width: 16px;
+        font-size: 12px;
+        border-radius: 50%;
+        background-color: #e5493a;
+        color:white;
+        position: absolute;
+        right:0px;
+        top:0px;
+        height: 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .header__menu{
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &__item{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: inherit;
+        }
+        &__link{
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          padding: 10px 0;
+          color:#7a7a7a;
+          text-transform: uppercase;
+          position: relative;
+          &:hover{
+            color:#e5493a;
+            &:before{
+              content: '';
+              width: 8px;
+              height: 2px;
+              background-color: #e5493a;
+              position: absolute;
+              top:0;
+              left:0;
+            }
+          }
+          &.active{
+            color:#e5493a;
+            &:before{
+                content: '';
+                width: 8px;
+                height: 2px;
+                background-color: #e5493a;
+                position: absolute;
+                top:0;
+                left:0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+/* Контентная часть */
+
+.content{
+  min-height: 674px;
+  .content-banner{
+    .container{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .home-slider{
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 900px;
+      overflow: hidden;
+      position: relative;
+      &__wrapper{
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+      }
+      &__item{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width:900px;
+        max-width: 900px;
+        position: relative;
+        &__title{
+          position: absolute;
+          left: 0;
+          right: 0;
+          margin-bottom: 20px;
+          text-align: center;
+          font-size: 28px;
+          text-transform: uppercase;
+          bottom: 0;
+        }
+      }
+      .slider__arrow{
+        position: absolute;
+        display: flex;
+        z-index: 2;
+        justify-content: center;
+        align-items: center;
+        top:50%;
+        transform: translate(0%,-50%);
+        right:20px;
+        &.arrow--left{
+          left:20px;
+          right: initial;
+          transform: translate(0, -50%);
+        }
+      }
+    }
+  }
+
+}
+
+/*  Подвал */
+footer{
+  .footer__copyright{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+    background-color: #111111;
+    width: 100%;
+    &__title{
+      color:#959595;
+    }
+    &__link{
+      color:#e5493a;
+    }
+  }
+}
+
+
+/* Анимация и переходы */
+
+.fade {
+  animation-name: fade;
+  animation-duration: 2.4s;
+  animation-name: fade;
+  animation-duration: 2.4s;
+  transition: 0.5s margin;
+}
+@keyframes fade {
+  from {
+    opacity: 0.6;
+    transform: translateX(-100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}

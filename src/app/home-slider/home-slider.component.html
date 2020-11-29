@@ -1,0 +1,26 @@
+<div class="container">
+  <div class="home-slider">
+   <app-image-link
+    (click)="prevSlide()"
+    [link]="sliderArrowLeftLink"
+    [image]="sliderArrowImage"
+   >
+
+   </app-image-link>
+    <div class="home-slider__wrapper" [ngStyle]="{'margin-left':  + (200 * (-1 * (-1  + sliderCounter))) + '%' }">
+      <app-home-slider-item
+        *ngFor="let Item of sliderItems; index as i"
+        [item]="Item"
+        [count]="i"
+      >
+
+      </app-home-slider-item>
+    </div>
+    <app-image-link
+      (click)="nextSlide()"
+      [link]="sliderArrowRightLink"
+      [image]="sliderArrowRightImg"
+    >
+    </app-image-link>
+   </div>
+</div>

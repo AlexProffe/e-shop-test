@@ -1,0 +1,21 @@
+<div class="header__panel">
+  <div class="container">
+    <div class="header__panel__item">
+      <div class="header__panel__item__wishlist wishlist">
+        <app-wishlist
+          [link]="wishlistLink"
+          [icon]="wishlistIcon"
+          [count]="wishlistCount"
+        >
+        </app-wishlist>
+      </div>
+      <div class="header__panel__item__account account">
+        <app-icon-link
+          [link]="loginLink"
+          [icon]="loginIcon"
+        >
+        </app-icon-link>
+      </div>
+    </div>
+  </div>
+</div>

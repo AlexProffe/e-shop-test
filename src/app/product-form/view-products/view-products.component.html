@@ -1,0 +1,11 @@
+<div class="products">
+
+  <ng-container *ngFor="let product of productsList">
+    <app-product-item [product]="product">
+
+    </app-product-item>
+  </ng-container>
+
+  <button (click)="getProducts()">Показать товары</button>
+  <button (click)="check()">Показать товары</button>
+</div>

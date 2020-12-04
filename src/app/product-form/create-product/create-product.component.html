@@ -1,0 +1,31 @@
+<form [formGroup]="contactForm" (ngSubmit)="onSubmit()" id="create-product">
+
+
+    <label for="title">
+      Product Title
+      <input type="text" id="title" name="title" formControlName="title">
+      <div class="error" *ngIf="isControlInvalid('title')">
+        Имя должно состоять только из русских букв и его длина > 5
+      </div>
+    </label>
+    <label for="description">Product Description
+      <input type="text" id="description" name="description" formControlName="description">
+      <div class="error" *ngIf="isControlInvalid('description')">
+        Описание товара состоит из русских букв и его длина > 10
+      </div>
+    </label>
+    <label for="count">Product Count
+      <input type="number" id="count" name="count" formControlName="count">
+      <div class="error" *ngIf="isControlInvalid('count')">
+        Количество товара обязательно и должно быть не меньше 10
+      </div>
+    </label>
+    <label for="price">Product Price
+      <input type="number" id="price" name="price" formControlName="price" step="0.1">
+      <div class="error" *ngIf="isControlInvalid('price')">
+        Цена обязательна и  должна быть не меньше 10
+      </div>
+    </label>
+    <button type="submit">Submit</button>
+
+</form>

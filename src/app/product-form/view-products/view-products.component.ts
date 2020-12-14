@@ -20,13 +20,10 @@ export class ViewProductsComponent implements OnInit {
   public getProducts(): void {
     this.crudServiceService.getData<Product>('products').subscribe((value: Product[]) => {
       this.productsList = value;
-      console.log(value);
     });
   }
 
   public check(): void {
-    this.crudServiceService
-      .getData<Product>('products')
-      .subscribe((value: Product[]) => console.log(value));
+    this.crudServiceService.getData<Product>('products').subscribe((value: Product[]) => {});
   }
 }

@@ -1,20 +1,24 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import firebase from 'firebase';
 import { CRUDServiceService } from './crudservice.service';
 import { Book } from './Book';
 import { AuthService } from './auth.service';
+import { StoreService } from './store.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'FirstAngApp';
 
   public test: [string, string] = ['Hello World!!', 'Test'];
 
   public isChildClosed = false;
+
+  public user: firebase.User;
 
   public testString = 'Test';
 
@@ -31,18 +35,15 @@ export class AppComponent {
     public authService: AuthService,
     private router: Router,
     private activeRoute: ActivatedRoute,
-  ) {
-    console.log(this.activeRoute);
-  }
+    private storeService: StoreService,
+  ) {}
 
   public addObject(): void {
-    this.crudService
-      .createEntity('books', { name: 'newBook' })
-      .subscribe((value: string) => console.log(value));
+    this.crudService.createEntity('books', { name: 'newBook' }).subscribe((value: string) => {});
   }
 
   public createObject(): void {
-    this.crudService.getData<Book>('books').subscribe((value: Book[]) => console.log(value));
+    this.crudService.getData<Book>('books').subscribe((value: Book[]) => {});
   }
 
   public updateObject(): void {
@@ -59,5 +60,11 @@ export class AppComponent {
 
   public logout(): void {
     this.authService.signOut().subscribe((value) => {});
+  }
+
+  ngOnInit() {
+    this.storeService.user$.subscribe((value: firebase.User) => {
+      this.user = value;
+    });
   }
 }

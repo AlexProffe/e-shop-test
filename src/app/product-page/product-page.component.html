@@ -1,0 +1,23 @@
+<div class="solo-product">
+  <div class="container">
+    <div class="product__wrapper" *ngIf="!loading">
+      <div class="product__wrapper__image">
+        <img src="{{product.image}}" alt="{{product.title}}">
+      </div>
+      <div class="product__wrapper__info">
+        <h2 class="product__wrapper__title"> {{product.title}}</h2>
+        <p class="product__wrapper__description"> {{product.description}}</p>
+        <div class="product__wrapper__prices">
+          <h3 class="product__wrapper__price" [ngClass]="{sale: product.sale}" >{{product.price}} $</h3>
+          <h3 class="product__wrapper__price" [ngClass]="{main: product.sale}" *ngIf="product.sale">{{product.sale}} $</h3>
+        </div>
+
+        <div class="product__wrapper__buttons">
+          <button class="product__wrapper__button" (click)="addToCart()"> в корзину</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

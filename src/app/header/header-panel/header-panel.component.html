@@ -10,11 +10,24 @@
         </app-wishlist>
       </div>
       <div class="header__panel__item__account account">
-        <app-icon-link
-          [link]="loginLink"
-          [icon]="loginIcon"
-        >
-        </app-icon-link>
+          <app-icon-link
+            *ngIf="!(storeService.user); else hide"
+            [link]="loginLink"
+            [icon]="loginIcon"
+            (click)="login($event)"
+          >
+          </app-icon-link>
+
+        <ng-template #hide>
+          <app-icon-link
+
+            [link]="logoutLink"
+            [icon]="loginIcon"
+            (click)="logout($event)"
+          >
+          </app-icon-link>
+        </ng-template>
+
       </div>
     </div>
   </div>

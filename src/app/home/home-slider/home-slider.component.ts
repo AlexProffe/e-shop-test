@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Image } from '../../Image';
 import { Link } from '../../Link';
+import { CRUDServiceService } from '../../crudservice.service';
 
 @Component({
   selector: 'app-home-slider',
@@ -8,22 +9,9 @@ import { Link } from '../../Link';
   styleUrls: ['./home-slider.component.scss'],
 })
 export class HomeSliderComponent implements OnInit {
-  public sliderItems: Image[] = [
-    {
-      url: './assets/home-slider-1.jpg',
-      alt: 'Product Item №',
-    },
-    {
-      url: './assets/home-slider-2.jpg',
-      alt: 'Product Item №',
-    },
-    {
-      url: './assets/home-slider-3.jpg',
-      alt: 'Product Item №',
-    },
-  ];
+  public sliderItems: Image[] = [];
 
-  public sliderItemsCount: number = this.sliderItems.length;
+  public sliderItemsCount: number;
 
   public sliderCounter = 0;
 
@@ -51,7 +39,9 @@ export class HomeSliderComponent implements OnInit {
     alt: 'arrow-left',
   };
 
-  public nextSlide(): void {
+  public nextSlide($event): void {
+    $event.preventDefault();
+    this.sliderItemsCount = this.sliderItems.length;
     if (this.sliderCounter < this.sliderItemsCount - 1) {
       this.sliderCounter += 1;
     } else {
@@ -59,7 +49,11 @@ export class HomeSliderComponent implements OnInit {
     }
   }
 
-  public prevSlide(): void {
+  constructor(private crudServiceService: CRUDServiceService) {}
+
+  public prevSlide($event): void {
+    $event.preventDefault();
+    this.sliderItemsCount = this.sliderItems.length;
     if (this.sliderCounter <= 0) {
       this.sliderCounter = this.sliderItemsCount - 1;
     } else {
@@ -67,5 +61,9 @@ export class HomeSliderComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.crudServiceService.getData<Image>('slider').subscribe((value: Image[]) => {
+      this.sliderItems = value;
+    });
+  }
 }

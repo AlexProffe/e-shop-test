@@ -1,7 +1,7 @@
-<div class="container">
+  <div class="container">
   <div class="home-slider">
    <app-image-link
-    (click)="prevSlide()"
+    (click)="prevSlide($event)"
     [link]="sliderArrowLeftLink"
     [image]="sliderArrowImage"
    >
@@ -17,7 +17,7 @@
       </app-home-slider-item>
     </div>
     <app-image-link
-      (click)="nextSlide()"
+      (click)="nextSlide($event)"
       [link]="sliderArrowRightLink"
       [image]="sliderArrowRightImg"
     >

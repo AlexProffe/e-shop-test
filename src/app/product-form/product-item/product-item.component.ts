@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Product } from '../../Product';
 import { CRUDServiceService } from '../../crudservice.service';
+import { Image } from '../../Image';
 
 @Component({
   selector: 'app-product-item',
@@ -8,16 +10,25 @@ import { CRUDServiceService } from '../../crudservice.service';
   styleUrls: ['./product-item.component.scss'],
 })
 export class ProductItemComponent implements OnInit {
+  constructor(private crudServiceService: CRUDServiceService, private router: Router) {}
+
   @Input()
   public product: Product;
 
-  constructor(private crudServiceService: CRUDServiceService) {}
+  public image: Image;
 
   ngOnInit(): void {
-    console.log(this.product);
+    this.image = {
+      url: this.product.image,
+      alt: this.product.title,
+    };
   }
 
-  public delete(id: string): void {
-    this.crudServiceService.deleteObject('products', id).subscribe();
+  public addToCart(): void {
+    console.log(this.product.id);
+  }
+
+  public toProduct(): void {
+    this.router.navigate([`/product/${this.product.id}`]);
   }
 }

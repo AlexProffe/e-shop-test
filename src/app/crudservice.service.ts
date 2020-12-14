@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import firebase from 'firebase';
+import { Query } from './Query';
 import firestore = firebase.firestore;
 import DocumentReference = firebase.firestore.DocumentReference;
 @Injectable({

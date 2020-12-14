@@ -22,19 +22,19 @@ export class HeaderNavComponent implements OnInit {
 
   public menuLinks: Link[] = [
     {
-      url: '#',
+      url: '/',
       title: 'Home',
       target: '_self',
-      class: 'header__menu__link active',
+      class: 'header__menu__link',
     },
     {
-      url: '#',
+      url: '/catalog',
       title: 'Catalog',
       target: '_self',
       class: 'header__menu__link',
     },
     {
-      url: '#',
+      url: '/comprasion',
       title: 'Сomparison',
       target: '_self',
       class: 'header__menu__link',

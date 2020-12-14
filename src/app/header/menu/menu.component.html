@@ -5,8 +5,9 @@
       [menuLink]="menuItem"
     >
     </app-menu-item>
+    <button class="menu-open" (click)="openBurger($event)" >&#9776;</button>
   </ul>
-  <div class="cart-icon">
+  <div class="cart-icon" (click)="openCart($event)">
     <app-icon-link
       [link]="cartLink"
       [icon]="cartIcon"
@@ -19,5 +20,42 @@
 
     </app-cart-count>
   </div>
+  <div class="modal-burger modal"  [ngClass]="{hidden: burgerStatus === false}">
+    <ul class="modal-burger__menu">
+      <app-menu-item
+        *ngFor="let menuItem of menuItems"
+        [menuLink]="menuItem"
+      >
+      </app-menu-item>
+      <button class="menu-open" (click)="openBurger($event)"><i class="fa fa-times"></i></button>
+    </ul>
+  </div>
+   <div class="modal-cart modal"  [ngClass]="{hidden: cartStatus === false}" (click)="openCart($event)" >
+     <div class="modal-cart__content" (click)="stopEvent($event)">
+       <h2 class="modal-cart__title">Корзина</h2>
+       <div class="modal-cart__products">
+         <button class="modal-close" (click)="openCart($event)">X</button>
+         <ng-container *ngFor="let cartItem of cartItems">
+           <div class="modal-cart__product">
+             <div class="modal-cart__product__image">
+               <app-image
+                [image]="{url: cartItem.image, alt: cartItem.title}"
+               >
 
+               </app-image>
+             </div>
+             <div class="modal-cart__product__info">
+               <h2 class="modal-cart__product__title">{{cartItem.title}}</h2>
+               <div class="modal-cart__product__prices">
+                 <h3 class="modal-cart__product__price" [ngClass]="{sale: cartItem.sale}" >{{cartItem.price}} $</h3>
+                 <h3 class="modal-cart__product__price" [ngClass]="{main: cartItem.sale}" *ngIf="cartItem.sale">{{cartItem.sale}} $</h3>
+               </div>
+               <button class="modal-cart__product__button"><i class="fa fa-times"></i></button>
+             </div>
+           </div>
+         </ng-container>
+         <a routerLink="/catalog">На страницу корзины</a>
+       </div>
+     </div>
+   </div>
 </nav>

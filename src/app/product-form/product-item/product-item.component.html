@@ -1,7 +1,19 @@
 <div class="product">
-  <h1 class="product__title">{{product.title}}</h1>
-  <p class="product__description">{{product.description}}</p>
-  <h2 class="product__price">{{product.price}} $</h2>
-  <h2>Количетсво товаров на складе:  {{product.count}}</h2>
-  <button (click)="delete(product.id)">X</button>
+  <app-image
+    [image]="image"
+  >
+
+  </app-image>
+  <div class="product__stocks">
+    <span class="product__stock" *ngIf="product.sale">Sale</span>
+  </div>
+  <h2 class="product__title">{{product.title}}</h2>
+  <div class="product__prices">
+    <h3 class="product__price" [ngClass]="{sale: product.sale}" >{{product.price}} $</h3>
+    <h3 class="product__price" [ngClass]="{main: product.sale}" *ngIf="product.sale">{{product.sale}} $</h3>
+  </div>
+  <div class="product__buttons">
+    <button (click)="addToCart()"> в корзину</button>
+    <button (click)="toProduct()"> Подробнее </button>
+  </div>
 </div>

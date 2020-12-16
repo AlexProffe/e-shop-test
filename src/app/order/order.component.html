@@ -1,0 +1,146 @@
+<div class="order">
+  <div class="container">
+    <form [formGroup]="orderForm" (ngSubmit)="onSubmit()"  class="order__form">
+      <div class="order__form__part part-one">
+        <h2 class="order__form__part__title">
+          1.Способ получения
+        </h2>
+        <label for="city" class="xl-big">
+          Населённый пункт *
+          <input type="text" id="city" name="city" formControlName="city">
+          <div class="error" *ngIf="isControlInvalid('city')">
+            Поле Населённый пункт не должно быть пустым
+          </div>
+        </label>
+        <label for="street" class="big">
+          Улица *
+          <input type="text" id="street" name="street" formControlName="street">
+          <div class="error" *ngIf="isControlInvalid('street')">
+            Поле Улица не должно быть пустым
+          </div>
+        </label>
+        <label for="house" class="small">
+          Дом *
+          <input type="number" id="house" name="house" formControlName="house">
+          <div class="error" *ngIf="isControlInvalid('house')">
+            Поле Дом не должно быть пустым
+          </div>
+        </label>
+        <label for="corps" class="small">
+          Корпус
+          <input type="number" id="corps" name="corps" formControlName="corps">
+        </label>
+        <label for="entrance" class="small">
+         Подъезд
+          <input type="number" id="entrance" name="entrance" formControlName="entrance">
+        </label>
+        <label for="floor" class="small">
+          Этаж *
+          <input type="number" id="floor" name="floor" formControlName="floor">
+          <div class="error" *ngIf="isControlInvalid('floor')">
+           Поле Этаж не должно быть пустым
+          </div>
+        </label>
+        <label for="flat" class="small">
+          Квартира *
+          <input type="number" id="flat" name="flat" formControlName="flat">
+          <div class="error" *ngIf="isControlInvalid('flat')">
+            Поле Квартира не должно быть пустым
+          </div>
+        </label>
+        <label for="message" class="xl-big">
+         Комментарий к заказу
+          <textarea  id="message" name="message" formControlName="message" ></textarea>
+         <div class="error" *ngIf="isControlInvalid('message')">
+           Максимальная длина сообщения 2048 символов
+         </div>
+        </label>
+        <h3 class="order__form__part__subtitle">Контактные данные</h3>
+        <label for="name" class="medium">
+         Имя *
+          <input  id="name" name="name" formControlName="name" >
+          <div class="error" *ngIf="isControlInvalid('name')">
+            Имя должно состоять только из русских букв и его длина > 2
+          </div>
+        </label>
+        <label for="surname" class="medium">
+          Фамилия *
+          <input  id="surname" name="surname" formControlName="surname" >
+          <div class="error" *ngIf="isControlInvalid('surname')">
+            Фамилия должна состоять только из русских букв и её длина > 3
+          </div>
+        </label>
+        <label for="email" class="medium">
+          Email *
+          <input  id="email" name="email" formControlName="email" >
+          <div class="error" *ngIf="isControlInvalid('email')">
+            Email должен быть корректным
+          </div>
+        </label>
+        <label for="phone" class="medium">
+          Телефон *
+          <input  id="phone" name="phone" formControlName="phone" >
+          <div class="error" *ngIf="isControlInvalid('phone')">
+            Поле телефон обязательно
+          </div>
+        </label>
+      </div>
+      <div class="order__form__part part-two">
+        <h3 class="order__form__part__subtitle">Данные оплаты</h3>
+        <label for="cardnumber" class="xl-big">
+          Номер карты *
+          <input  id="cardnumber" name="cardnumber" formControlName="cardnumber" >
+          <div class="error" *ngIf="isControlInvalid('cardnumber')">
+            Номер карты обязателен
+          </div>
+        </label>
+        <label for="cvv" class="medium">
+          Cvv *
+          <input  id="cvv" name="cvv" formControlName="cvv" >
+          <div class="error" *ngIf="isControlInvalid('cvv')">
+            Поле CVV обязательно
+          </div>
+        </label>
+        <label for="cardmonth" class="medium">
+          ММ *
+          <input  id="cardmonth" name="cardmonth" formControlName="cardmonth" >
+          <div class="error" *ngIf="isControlInvalid('cardmonth')">
+            Поле ММ обязательно
+          </div>
+        </label>
+        <label for="cardyear" class="medium">
+          ГГ *
+          <input  id="cardyear" name="cardyear" formControlName="cardyear" >
+          <div class="error" *ngIf="isControlInvalid('cardyear')">
+            Поле ГГ обязательно
+          </div>
+        </label>
+      </div>
+
+        <button (click)="onSubmit()">Оформить заказ</button>
+    </form>
+    <div class="order-cart">
+      <div class="order-cart__header">
+        <h2 class="order-cart__header__title">Заказ</h2>
+        <a   routerLink="/catalog" class="order-cart__header__link">Изменить</a>
+      </div>
+      <div class="order-cart__products">
+        <ng-container *ngFor="let item of cartItems">
+          <div class="order-cart__product">
+            <div class="order-cart__product__info">
+              <h2 class="order-cart__product__title">{{item.title}}</h2>
+              <div class="order-cart__product__prices">
+                <h3 class="order-cart__product__price" [ngClass]="{sale: item.sale}" >{{item.price}} $</h3>
+                <h3 class="order-cart__product__price" [ngClass]="{main: item.sale}" *ngIf="item.sale">{{item.sale}} $</h3>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+      <div class="order-cart__footer">
+        <h2>Доставка: {{transfer}} $</h2>
+        <h2 class="order-cart__total">Итого: {{total}} $</h2>
+      </div>
+    </div>
+  </div>
+</div>

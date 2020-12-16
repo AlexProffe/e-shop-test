@@ -23,6 +23,15 @@ const routes: Routes = [
     path: 'catalog',
     loadChildren: () => import('./catalog/catalog.module').then((m) => m.CatalogModule),
   },
+  {
+    path: 'order',
+    loadChildren: () => import('./order/order.module').then((m) => m.OrderModule),
+    canActivate: [AuthGuardService],
+  },
+  {
+    path: 'login',
+    loadChildren: () => import('./login/login.module').then((m) => m.LoginModule),
+  },
 ];
 
 @NgModule({

@@ -4,6 +4,8 @@ import { Link } from '../../Link';
 import { Icon } from '../../Icon';
 import { Product } from '../../Product';
 import { StoreService } from '../../store.service';
+import { CRUDServiceService } from '../../crudservice.service';
+import {Shop} from "../../Shop";
 
 @Component({
   selector: 'app-menu',
@@ -44,7 +46,7 @@ export class MenuComponent implements OnInit {
     class: 'cart__link',
   };
 
-  constructor(private store: StoreService) {}
+  constructor(private store: StoreService, private crudServiceService: CRUDServiceService) {}
 
   @Input()
   public menuItems: Link[];
@@ -73,9 +75,25 @@ export class MenuComponent implements OnInit {
   ngOnInit(): void {
     this.store.user$.subscribe((value: firebase.User) => {
       this.user = value;
-      setTimeout(() => {
-        console.log(this.user);
-      }, 0);
+      console.log(this.user);
     });
+    setTimeout(() => {
+      this.crudServiceService
+        .getQueryMultipleData('shops', {
+          firstFieldPath: 'userID',
+          firstValue: this.user.uid,
+          secondFieldPath: 'status',
+          secondValue: 'active',
+        })
+        .subscribe((value1: Shop[]) => {
+          this.cartItems = value1[0].cart;
+          this.cartCountLink = {
+            url: '#',
+            title: `${this.cartItems.length}`,
+            target: '_self',
+            class: 'cart-circle',
+          };
+        });
+    }, 1000);
   }
 }

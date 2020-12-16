@@ -165,6 +165,7 @@ header{
         &__content{
           height: 100%;
           width: 35%;
+          overflow-y: auto;
           .modal-cart__title{
             text-align: center;
             margin: 15px 0;
@@ -185,12 +186,14 @@ header{
             display: flex;
             flex-direction: column;
             align-items: center;
+            width: 100%;
             .modal-cart__product{
               display: flex;
+
               @media screen and (max-width: 750px){
                 flex-direction: column;
               }
-              justify-content: space-around;
+              justify-content: space-between;
               padding: 10px;
               align-items: center;
               position: relative;
@@ -200,6 +203,9 @@ header{
                 text-transform: uppercase;
                 margin-bottom: 15px;
               }
+              &__info{
+                width: 50%;
+              }
               &__image{
                 width: 40%;
                 @media screen and (max-width: 750px){
@@ -208,13 +214,10 @@ header{
                 }
               }
               &__prices{
-                display: flex;
-                justify-content: space-around;
+               display: flex;
+                justify-content: flex-start;
                 align-items: center;
-                @media screen and (max-width: 750px){
-                  width: 100%;
-                }
-                width: 50%;
+                width: 100%;
                 margin-bottom: 15px;
               }
               &__button{
@@ -227,6 +230,7 @@ header{
                 background-color: transparent;
               }
               &__price{
+                margin-right: 15px;
                 font-size: 18px;
                 text-transform: uppercase;
                 color:black;
@@ -430,15 +434,16 @@ header{
   text-transform: uppercase;
   text-align: center;
 }
-app-view-products{
-  width: 45%;
-}
+
 .products{
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
+  app-view-products{
+    width: 45%;
+  }
   app-product-item{
     width: 350px;
     padding: 0px 10px;
@@ -543,6 +548,9 @@ app-view-products{
 
   }
 
+}
+.catalog{
+  min-height: 1000px;
 }
 /*Одиночная страница товара*/
 

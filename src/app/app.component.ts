@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
   }
 
   public updateObject(): void {
-    this.crudService.updateObject('books', 'jo3yUVUPiEOs5ZyWS61K').subscribe();
+    this.crudService.updateObject('books', 'jo3yUVUPiEOs5ZyWS61K', 'name').subscribe();
   }
 
   public deleteObject(): void {

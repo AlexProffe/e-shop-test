@@ -37,6 +37,14 @@
         align-items: center;
         label{
           font-size: 14px;
+          position: relative;
+          div.error{
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            right: 0;
+          }
+          padding-bottom: 25px;
           margin: 10px 0;
           &.small{
             width: 18%;

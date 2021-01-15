@@ -1,11 +1,20 @@
-import { Component, ContentChild, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import firebase from 'firebase';
+import { distinctUntilChanged, filter, switchMap, take, takeWhile, tap } from 'rxjs/operators';
 import { Link } from '../../Link';
 import { Icon } from '../../Icon';
 import { Product } from '../../Product';
 import { StoreService } from '../../store.service';
 import { CRUDServiceService } from '../../crudservice.service';
-import {Shop} from "../../Shop";
+import { Shop } from '../../Shop';
 
 @Component({
   selector: 'app-menu',
@@ -13,22 +22,13 @@ import {Shop} from "../../Shop";
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent implements OnInit {
-  public cartItems: Product[] = [
-    {
-      count: 22222,
-      title: 'Product title №12',
-      description: 'Some words about this Product',
-      image:
-        'https://firebasestorage.googleapis.com/v0/b/e-shop-courses.appspot.com/o/portfolio-1.png?alt=media&token=2a414ab7-0979-4c0b-8534-db524b92d83f',
-      price: 110,
-      sale: 80,
-      id: 'rLl2NpqGOV2WBUTLUcBc',
-    },
-  ];
+  public cartItems: Product[] = [];
 
   public user: firebase.User;
 
   public cartStatus = false;
+
+  public cartID: string;
 
   public burgerStatus = false;
 
@@ -46,7 +46,9 @@ export class MenuComponent implements OnInit {
     class: 'cart__link',
   };
 
-  constructor(private store: StoreService, private crudServiceService: CRUDServiceService) {}
+  constructor(private storeService: StoreService, private crudServiceService: CRUDServiceService) {}
+
+  private currentShopId: string;
 
   @Input()
   public menuItems: Link[];
@@ -72,28 +74,79 @@ export class MenuComponent implements OnInit {
     this.burgerStatus = !this.burgerStatus;
   }
 
+  public deleteProduct(index): void {
+    this.cartItems.splice(index, 1);
+
+    this.cartCountLink = {
+      url: '#',
+      title: `${this.cartItems.length}`,
+      target: '_self',
+      class: 'cart-circle',
+    };
+    this.crudServiceService
+      .getQueryMultipleData('shops', {
+        firstFieldPath: 'userID',
+        firstValue: this.storeService.user.uid,
+        secondFieldPath: 'status',
+        secondValue: 'active',
+      })
+      .pipe(
+        switchMap((shopValue: Shop[]) => {
+          const shop = shopValue[0];
+          return this.crudServiceService.updateCart('shops', this.currentShopId, this.cartItems);
+        }),
+        tap((value: string) => {
+          this.storeService.shop = { id: value };
+        }),
+        take(1),
+      )
+      .subscribe();
+  }
+
   ngOnInit(): void {
-    this.store.user$.subscribe((value: firebase.User) => {
-      this.user = value;
-      console.log(this.user);
-    });
-    setTimeout(() => {
-      this.crudServiceService
-        .getQueryMultipleData('shops', {
-          firstFieldPath: 'userID',
-          firstValue: this.user.uid,
-          secondFieldPath: 'status',
-          secondValue: 'active',
-        })
-        .subscribe((value1: Shop[]) => {
-          this.cartItems = value1[0].cart;
+    this.storeService.shop$
+      .pipe(
+        filter((value) => {
+          return !!value;
+        }),
+        tap((value: Shop) => {
+          this.currentShopId = value.id;
+          if (this.currentShopId) {
+            this.currentShopId = value.id;
+          }
+        }),
+        distinctUntilChanged((x, y) => {
+          return x.id === y.id;
+        }),
+        switchMap((value) => {
+          return this.crudServiceService.handleShop('shops', value.id).pipe(
+            takeWhile((shop: Shop) => {
+              return this.currentShopId === shop.id;
+            }),
+          );
+        }),
+        tap((value: Shop) => {
+          this.cartItems = value.cart;
           this.cartCountLink = {
             url: '#',
             title: `${this.cartItems.length}`,
             target: '_self',
             class: 'cart-circle',
           };
-        });
-    }, 1000);
+          return this.crudServiceService
+            .getQueryData('users', {
+              fieldPath: 'uid',
+              value: this.storeService.user.uid,
+            })
+            .pipe(
+              tap((value1: firebase.User[]) => {
+                console.log(value1);
+                this.storeService.user = value1[0];
+                return [];
+              }),
+            );
+        }),
+      )
+      .subscribe();
   }
 }

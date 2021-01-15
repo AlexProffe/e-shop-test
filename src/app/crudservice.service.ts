@@ -4,8 +4,11 @@ import { from, Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import firebase from 'firebase';
 import { Query } from './Query';
+import { Shop } from './Shop';
 import firestore = firebase.firestore;
 import DocumentReference = firebase.firestore.DocumentReference;
+import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -66,6 +69,7 @@ export class CRUDServiceService {
       })
       .snapshotChanges()
       .pipe(
+        take(1),
         map((actions) =>
           actions.map((a) => {
             const data: any = a.payload.doc.data();
@@ -73,7 +77,6 @@ export class CRUDServiceService {
             return { id, ...data } as T;
           }),
         ),
-        take(1),
       );
   }
 
@@ -86,7 +89,16 @@ export class CRUDServiceService {
     ).pipe(take(1));
   }
 
-  public updateCartObject(collectionName: string, id: string, { value }): Observable<void> {
+  public updateUserBalance(collectionName: string, id: string, value): Observable<void> {
+    return from(
+      this.firestoreService
+        .collection(collectionName)
+        .doc(id)
+        .set({ balance: value }, { merge: true }),
+    ).pipe(take(1));
+  }
+
+  public updateCartObject(collectionName: string, id: string, value: string): Observable<void> {
     return from(
       this.firestoreService
         .collection(collectionName)
@@ -95,13 +107,56 @@ export class CRUDServiceService {
     ).pipe(take(1));
   }
 
-  public updateCart(collectionName: string, id: string, { value }): Observable<void> {
+  public updateCart(collectionName: string, id: string, value: any): Observable<string> {
     return from(
       this.firestoreService
         .collection(collectionName)
         .doc(id)
         .set({ cart: value }, { merge: true }),
-    ).pipe(take(1));
+    ).pipe(
+      map(() => id),
+      take(1),
+    );
+  }
+
+  public updateWishlist(collectionName: string, id: string, value: any): Observable<string> {
+    return from(
+      this.firestoreService
+        .collection(collectionName)
+        .doc(id)
+        .set({ items: value }, { merge: true }),
+    ).pipe(
+      map(() => id),
+      take(1),
+    );
+  }
+
+  public handleShop(collectionName: string, shopId: string): Observable<any> {
+    return this.firestoreService
+      .collection(collectionName)
+      .doc(shopId)
+      .snapshotChanges()
+      .pipe(
+        map((testData: any) => {
+          const data = testData.payload.data();
+          const { id } = testData.payload;
+          return { id, ...data };
+        }),
+      );
+  }
+
+  public handleWishlist(collectionName: string, wishId: string): Observable<any> {
+    return this.firestoreService
+      .collection(collectionName)
+      .doc(wishId)
+      .snapshotChanges()
+      .pipe(
+        map((testData: any) => {
+          const data = testData.payload.data();
+          const { id } = testData.payload;
+          return { id, ...data };
+        }),
+      );
   }
 
   public deleteObject(collectionName: string, id: string): Observable<void> {

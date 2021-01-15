@@ -1,4 +1,10 @@
-<img
-  src="{{image.url}}"
-  alt="{{image.alt}}"
->
+<ng-container *ngIf="image.url.length > 1; else show">
+  <img
+    src="{{image.url}}"
+    alt="{{image.alt}}"
+  >
+</ng-container>
+
+<ng-template #show>
+  <img src="../../../assets/placeholder-image.png" alt="Placeholder image">
+</ng-template>

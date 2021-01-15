@@ -8,43 +8,79 @@
         <label for="city" class="xl-big">
           Населённый пункт *
           <input type="text" id="city" name="city" formControlName="city">
-          <div class="error" *ngIf="isControlInvalid('city')">
+          <div class="error" *ngIf="orderForm.controls['city'].errors?.pattern">
+            Название населённого пункта должно состоять из русских букв
+          </div>
+          <div class="error" *ngIf="orderForm.controls['city'].errors?.required">
             Поле Населённый пункт не должно быть пустым
           </div>
         </label>
-        <label for="street" class="big">
+        <label for="street" class="xl-big">
           Улица *
           <input type="text" id="street" name="street" formControlName="street">
-          <div class="error" *ngIf="isControlInvalid('street')">
+          <div class="error" *ngIf="orderForm.controls['street'].errors?.pattern">
+            Название улицы должно состоять из русских букв
+          </div>
+          <div class="error" *ngIf="orderForm.controls['street'].errors?.required">
             Поле Улица не должно быть пустым
           </div>
         </label>
-        <label for="house" class="small">
+        <label for="house" class="medium">
           Дом *
           <input type="number" id="house" name="house" formControlName="house">
-          <div class="error" *ngIf="isControlInvalid('house')">
+          <div class="error" *ngIf="orderForm.controls['house'].errors?.min">
+            Минимальный номер дома 1
+          </div>
+          <div class="error" *ngIf="orderForm.controls['house'].errors?.max">
+            Максимальный номер дома 999
+          </div>
+          <div class="error" *ngIf="orderForm.controls['house'].errors?.required">
             Поле Дом не должно быть пустым
           </div>
         </label>
-        <label for="corps" class="small">
+        <label for="corps" class="medium">
           Корпус
           <input type="number" id="corps" name="corps" formControlName="corps">
-        </label>
-        <label for="entrance" class="small">
-         Подъезд
-          <input type="number" id="entrance" name="entrance" formControlName="entrance">
-        </label>
-        <label for="floor" class="small">
-          Этаж *
-          <input type="number" id="floor" name="floor" formControlName="floor">
-          <div class="error" *ngIf="isControlInvalid('floor')">
-           Поле Этаж не должно быть пустым
+          <div class="error" *ngIf="orderForm.controls['corps'].errors?.min">
+            Минимальный номер корпуса 1
+          </div>
+          <div class="error" *ngIf="orderForm.controls['corps'].errors?.max">
+            Максимальный номер корпуса 36
           </div>
         </label>
-        <label for="flat" class="small">
+        <label for="entrance" class="medium">
+         Подъезд
+          <input type="number" id="entrance" name="entrance" formControlName="entrance">
+          <div class="error" *ngIf="orderForm.controls['entrance'].errors?.min">
+            Минимальный номер подъезда 1
+          </div>
+          <div class="error" *ngIf="orderForm.controls['entrance'].errors?.max">
+            Максимальный номер подъезда 36
+          </div>
+        </label>
+        <label for="floor" class="medium">
+          Этаж *
+          <input type="number" id="floor" name="floor" formControlName="floor">
+          <div class="error" *ngIf="orderForm.controls['floor'].errors?.min">
+            Минимальный номер этажа 1
+          </div>
+          <div class="error" *ngIf="orderForm.controls['floor'].errors?.max">
+            Максимальный номер этажа 200
+          </div>
+          <div class="error" *ngIf="orderForm.controls['floor'].errors?.required">
+            Поле Этаж не должно быть пустым
+          </div>
+        </label>
+        <label for="flat" class="medium">
           Квартира *
-          <input type="number" id="flat" name="flat" formControlName="flat">
-          <div class="error" *ngIf="isControlInvalid('flat')">
+          <input type="number" id="flat" name="flat" formControlName="flat" min="1" max="999" maxlength="3">
+          <div class="error" *ngIf="orderForm.controls['flat'].errors?.min">
+            Минимальный номер квартиры 1
+          </div>
+          <div class="error" *ngIf="orderForm.controls['flat'].errors?.max">
+            Максимальный номер квартиры 999
+          </div>
+          <div class="error" *ngIf="orderForm.controls['flat'].errors?.required">
             Поле Квартира не должно быть пустым
           </div>
         </label>
@@ -59,65 +95,47 @@
         <label for="name" class="medium">
          Имя *
           <input  id="name" name="name" formControlName="name" >
-          <div class="error" *ngIf="isControlInvalid('name')">
-            Имя должно состоять только из русских букв и его длина > 2
+          <div class="error" *ngIf="orderForm.controls['name'].errors?.pattern">
+            Ваше имя должно состоять из русских букв
+          </div>
+          <div class="error" *ngIf="orderForm.controls['name'].errors?.required">
+            Поле Имя не должно быть пустым
           </div>
         </label>
         <label for="surname" class="medium">
           Фамилия *
           <input  id="surname" name="surname" formControlName="surname" >
-          <div class="error" *ngIf="isControlInvalid('surname')">
-            Фамилия должна состоять только из русских букв и её длина > 3
+          <div class="error" *ngIf="orderForm.controls['surname'].errors?.pattern">
+            Ваша фамилия должна состоять из русских букв
+          </div>
+          <div class="error" *ngIf="orderForm.controls['surname'].errors?.required">
+            Поле Фамилия не должно быть пустым
           </div>
         </label>
         <label for="email" class="medium">
           Email *
           <input  id="email" name="email" formControlName="email" >
-          <div class="error" *ngIf="isControlInvalid('email')">
-            Email должен быть корректным
+          <div class="error" *ngIf="orderForm.controls['email'].errors?.email">
+            Проверьте правильность вашей почты пример:  test@mail.ru
+          </div>
+          <div class="error" *ngIf="orderForm.controls['email'].errors?.required">
+            Поле Email не должно быть пустым
           </div>
         </label>
         <label for="phone" class="medium">
           Телефон *
-          <input  id="phone" name="phone" formControlName="phone" >
-          <div class="error" *ngIf="isControlInvalid('phone')">
-            Поле телефон обязательно
+          <input  type="text" id="phone" name="phone" formControlName="phone">
+          <div class="error" *ngIf="orderForm.controls['phone'].errors?.pattern">
+            Проверьте правильность вашего телефона пример:  +375251234567 или +375 25 123 45 67
           </div>
-        </label>
-      </div>
-      <div class="order__form__part part-two">
-        <h3 class="order__form__part__subtitle">Данные оплаты</h3>
-        <label for="cardnumber" class="xl-big">
-          Номер карты *
-          <input  id="cardnumber" name="cardnumber" formControlName="cardnumber" >
-          <div class="error" *ngIf="isControlInvalid('cardnumber')">
-            Номер карты обязателен
+          <div class="error" *ngIf="orderForm.controls['phone'].errors?.required">
+            Поле телефон не должно быть пустым
           </div>
-        </label>
-        <label for="cvv" class="medium">
-          Cvv *
-          <input  id="cvv" name="cvv" formControlName="cvv" >
-          <div class="error" *ngIf="isControlInvalid('cvv')">
-            Поле CVV обязательно
-          </div>
-        </label>
-        <label for="cardmonth" class="medium">
-          ММ *
-          <input  id="cardmonth" name="cardmonth" formControlName="cardmonth" >
-          <div class="error" *ngIf="isControlInvalid('cardmonth')">
-            Поле ММ обязательно
-          </div>
-        </label>
-        <label for="cardyear" class="medium">
-          ГГ *
-          <input  id="cardyear" name="cardyear" formControlName="cardyear" >
-          <div class="error" *ngIf="isControlInvalid('cardyear')">
-            Поле ГГ обязательно
-          </div>
+
         </label>
       </div>
 
-        <button (click)="onSubmit()">Оформить заказ</button>
+        <button type="submit">Оформить заказ</button>
     </form>
     <div class="order-cart">
       <div class="order-cart__header">

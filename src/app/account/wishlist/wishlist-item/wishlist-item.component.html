@@ -1,0 +1,14 @@
+<ng-container *ngIf="item; else showItems">
+  <div class="wishlist__item">
+    <img src="{{item.image}}" alt="Placeholder Image" class="wishlist__item__image">
+    <h2 class="wishlist__item__title">{{item.title}}</h2>
+    <button class="wishlist__item__button" (click)="moreInfo()">Подробнее</button>
+  </div>
+</ng-container>
+<ng-template #showItems>
+  <div class="wishlist__item">
+    <img src="../../../../assets/placeholder-image.png" alt="Placeholder Image" class="wishlist__item__image">
+    <h2 class="wishlist__item__title">Wishlist Item Title</h2>
+    <button class="wishlist__item__button">Подробнее</button>
+  </div>
+</ng-template>

@@ -35,7 +35,7 @@
        <h2 class="modal-cart__title">Корзина</h2>
        <div class="modal-cart__products">
          <button class="modal-close" (click)="openCart($event)">X</button>
-         <ng-container *ngFor="let cartItem of cartItems">
+         <ng-container *ngFor="let cartItem of cartItems, let i = index">
            <div class="modal-cart__product">
              <div class="modal-cart__product__image">
                <app-image
@@ -50,11 +50,11 @@
                  <h3 class="modal-cart__product__price" [ngClass]="{sale: cartItem.sale}" >{{cartItem.price}} $</h3>
                  <h3 class="modal-cart__product__price" [ngClass]="{main: cartItem.sale}" *ngIf="cartItem.sale">{{cartItem.sale}} $</h3>
                </div>
-               <button class="modal-cart__product__button"><i class="fa fa-times"></i></button>
+               <button class="modal-cart__product__button" (click)="deleteProduct(i)"><i class="fa fa-times"></i></button>
              </div>
            </div>
          </ng-container>
-         <a routerLink="/catalog">На страницу корзины</a>
+         <a routerLink="/order" (click)="openCart($event)">На страницу покупки</a>
        </div>
      </div>
    </div>

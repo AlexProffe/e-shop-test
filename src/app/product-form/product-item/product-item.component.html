@@ -1,19 +1,42 @@
-<div class="product">
-  <app-image
-    [image]="image"
-  >
+<ng-container *ngIf="product.title.length > 1; else show">
+  <div class="product">
+    <button class="product__wishlist__btn" (click)="addToWishlist()">
+      <i class="fa fa-heart"></i>
+    </button>
+    <app-image
+      [image]="image"
+    >
 
-  </app-image>
-  <div class="product__stocks">
-    <span class="product__stock" *ngIf="product.sale">Sale</span>
+    </app-image>
+    <div class="product__stocks">
+      <span class="product__stock" *ngIf="product.sale">Sale</span>
+    </div>
+    <h2 class="product__title">{{product.title}}</h2>
+    <div class="product__prices">
+      <h3 class="product__price" [ngClass]="{sale: product.sale}" >{{product.price}} $</h3>
+      <h3 class="product__price" [ngClass]="{main: product.sale}" *ngIf="product.sale">{{product.sale}} $</h3>
+    </div>
+    <div class="product__buttons">
+      <button (click)="addToCart()"> в корзину</button>
+      <button (click)="toProduct()"> Подробнее </button>
+    </div>
   </div>
-  <h2 class="product__title">{{product.title}}</h2>
-  <div class="product__prices">
-    <h3 class="product__price" [ngClass]="{sale: product.sale}" >{{product.price}} $</h3>
-    <h3 class="product__price" [ngClass]="{main: product.sale}" *ngIf="product.sale">{{product.sale}} $</h3>
+</ng-container>
+<ng-template #show>
+  <div class="product">
+    <img src="../../../assets/placeholder-image.png" alt="placeholder">
+    <div class="product__stocks">
+
+    </div>
+    <h2 class="product__title">Product Name</h2>
+    <div class="product__prices">
+      <h3 class="product__price">300 $</h3>
+
+    </div>
+    <div class="product__buttons">
+      <button (click)="addToCart()"> в корзину</button>
+      <button (click)="toProduct()"> Подробнее </button>
+    </div>
   </div>
-  <div class="product__buttons">
-    <button (click)="addToCart()"> в корзину</button>
-    <button (click)="toProduct()"> Подробнее </button>
-  </div>
-</div>
+
+</ng-template>

@@ -1,0 +1,20 @@
+<section class="account">
+  <div class="container">
+    <div class="account__sidebar">
+      <ul class="account__sidebar__list">
+        <ng-container *ngFor="let item of sidebarLinks">
+          <li class="account__sidebar__list__item" >
+            <a href="#" class="account__sidebar__list__link"  [routerLinkActiveOptions]="{exact:true}" routerLinkActive="active" routerLink="{{item.link}}">{{item.title}}   <i class="{{item.iconClass}}"></i></a>
+
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+    <div class="account__content">
+      <router-outlet>
+
+      </router-outlet>
+    </div>
+  </div>
+</section>
+

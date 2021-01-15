@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import firebase from 'firebase';
+import { filter, switchMap } from 'rxjs/operators';
 import { Icon } from '../../Icon';
 import { Link } from '../../Link';
 import { AuthService } from '../../auth.service';
@@ -13,7 +14,7 @@ import { Shop } from '../../Shop';
   templateUrl: './header-panel.component.html',
   styleUrls: ['./header-panel.component.scss'],
 })
-export class HeaderPanelComponent implements OnInit {
+export class HeaderPanelComponent implements OnInit, OnDestroy {
   constructor(
     public authService: AuthService,
     private router: Router,
@@ -58,31 +59,12 @@ export class HeaderPanelComponent implements OnInit {
 
   public login($event): void {
     $event.preventDefault();
-    this.authService.googleAuth().subscribe((value) => {
-      console.log(value);
-    });
-    setTimeout(() => {
-      this.storeService.user$.subscribe((value: firebase.User) => {
-        this.user = value;
-        this.crudServiceService
-          .getQueryMultipleData('shops', {
-            firstFieldPath: 'userID',
-            firstValue: this.user.uid,
-            secondFieldPath: 'status',
-            secondValue: 'saved',
-          })
-          .subscribe((value1: Shop[]) => {
-            this.cartId = value1[0].id;
-            this.crudServiceService
-              .updateCartObject('shops', this.cartId, { value: 'active' })
-              .subscribe((value2) => console.log(value2));
-          });
-      });
-    }, 3500);
+    this.authService.googleAuth().subscribe((value) => {});
     this.router.navigate(['/']);
   }
 
   public logout($event): void {
+    this.storeService.shop = null;
     $event.preventDefault();
     this.storeService.user$.subscribe((value1: firebase.User) => {
       this.user = value1;
@@ -96,13 +78,90 @@ export class HeaderPanelComponent implements OnInit {
       })
       .subscribe((value: Shop[]) => {
         this.cartId = value[0].id;
+
         this.crudServiceService
-          .updateCartObject('shops', this.cartId, { value: 'saved' })
-          .subscribe((value1) => console.log(value1));
+          .updateCartObject('shops', this.cartId, 'saved')
+          .subscribe((value1) => {});
       });
-    this.authService.signOut().subscribe((value) => console.log(value));
+    this.authService.signOut().subscribe((value) => {});
     this.router.navigate(['/']);
   }
 
-  ngOnInit(): void {}
+  public open($event) {
+    $event.preventDefault();
+  }
+
+  ngOnInit(): void {
+    this.storeService.user$
+      .pipe(
+        filter((value) => !!value),
+        switchMap((value) => {
+          return this.crudServiceService
+            .getQueryMultipleData('shops', {
+              firstFieldPath: 'userID',
+              firstValue: value.uid,
+              secondFieldPath: 'status',
+              secondValue: 'saved',
+            })
+            .pipe(
+              switchMap((shopValue: Shop[]) => {
+                const shopCart: Shop = shopValue[0];
+                if (!shopCart) {
+                  return this.crudServiceService
+                    .getQueryMultipleData('shops', {
+                      firstFieldPath: 'userID',
+                      firstValue: value.uid,
+                      secondFieldPath: 'status',
+                      secondValue: 'active',
+                    })
+                    .pipe(
+                      switchMap((shopValue1: Shop[]) => {
+                        const shopCart1: Shop = shopValue1[0];
+                        if (!shopCart1) {
+                          return this.crudServiceService.createEntity('shops', {
+                            cart: [],
+                            userID: value.uid,
+                            status: 'active',
+                          });
+                        }
+                        this.storeService.shop = shopCart1;
+                        return this.crudServiceService.updateCartObject(
+                          'shops',
+                          shopCart1.id,
+                          'active',
+                        );
+                      }),
+                    );
+                }
+                this.storeService.shop = shopCart;
+
+                return this.crudServiceService.updateCartObject('shops', shopCart.id, 'active');
+              }),
+            );
+        }),
+      )
+      .subscribe();
+  }
+
+  ngOnDestroy() {
+    this.crudServiceService
+      .getQueryMultipleData('shops', {
+        firstFieldPath: 'userID',
+        firstValue: this.storeService.user.uid,
+        secondFieldPath: 'status',
+        secondValue: 'active',
+      })
+      .pipe(
+        switchMap((shopValue: Shop[]) => {
+          const shopCart: Shop = shopValue[0];
+
+          console.log(shopCart);
+          if (!shopCart) {
+            console.log(shopCart);
+            return;
+          }
+          return this.crudServiceService.updateCartObject('shops', shopCart.id, 'saved');
+        }),
+      );
+  }
 }

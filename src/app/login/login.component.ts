@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import firebase from 'firebase';
+import { switchMap } from 'rxjs/operators';
 import { AuthService } from '../auth.service';
 import { StoreService } from '../store.service';
 import { CRUDServiceService } from '../crudservice.service';
-import {Shop} from "../Shop";
+import { Shop } from '../Shop';
 
 @Component({
   selector: 'app-login',
@@ -27,23 +28,29 @@ export class LoginComponent implements OnInit {
     this.authService.googleAuth().subscribe((value) => {
       console.log(value);
     });
-    setTimeout(() => {
-      this.storeService.user$.subscribe((value: firebase.User) => {
-        this.user = value;
-        this.crudServiceService
-          .getQueryMultipleData('shops', {
-            firstFieldPath: 'userID',
-            firstValue: this.user.uid,
-            secondFieldPath: 'status',
-            secondValue: 'saved',
-          })
-          .subscribe((value1: Shop[]) => {
-            this.crudServiceService
-              .updateCartObject('shops', value1[0].id, { value: 'active' })
-              .subscribe((value2) => console.log(value2));
-          });
-      });
-    }, 2500);
+
+    this.crudServiceService
+      .getQueryMultipleData('shops', {
+        firstFieldPath: 'userID',
+        firstValue: this.storeService.user,
+        secondFieldPath: 'status',
+        secondValue: 'saved',
+      })
+      .pipe(
+        switchMap((value: Shop[]) => {
+          const shopCart: Shop = value[0];
+          console.log(shopCart);
+          if (!shopCart) {
+            return this.crudServiceService.createEntity('shops', {
+              cart: [],
+              userID: this.storeService.user.uid,
+              status: 'active',
+            });
+          }
+          return this.crudServiceService.updateCartObject('shops', shopCart.id, 'active');
+        }),
+      )
+      .subscribe();
     this.router.navigate(['/']);
   }
 }

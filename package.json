@@ -33,6 +33,8 @@
     "@angular/platform-browser-dynamic": "~11.0.0",
     "@angular/router": "~11.0.0",
     "@angular/service-worker": "~11.0.0",
+    "angular2-text-mask": "^9.0.0",
+    "angular7-text-mask": "^9.0.0",
     "firebase": "^8.1.1",
     "font-awesome": "^4.7.0",
     "rxjs": "~6.6.0",

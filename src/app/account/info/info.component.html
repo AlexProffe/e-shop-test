@@ -1,0 +1,25 @@
+<div class="account__info">
+  <div *ngIf="show; else defaultBlock">
+    <h2 class="account__info__name" >
+      {{user.displayName}}
+    </h2>
+    <img src="{{user.photoURL}}" alt="{{user.displayName}}">
+    <h2 class="account__info__email">
+      Email: {{user.email}}
+    </h2>
+    <h2 class="account__info__payment">
+      Баланс: {{user.balance}}
+    </h2>
+  </div>
+  <ng-template  #defaultBlock>
+    <div>
+      <h2 class="account__info__name">
+          Username
+      </h2>
+      <img src="../../../assets/placeholder-image.png" alt="username">
+      <h2 class="account__info__email">
+        test@example.com
+      </h2>
+    </div>
+  </ng-template>
+</div>

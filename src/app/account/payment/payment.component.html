@@ -1,0 +1,66 @@
+<div class="payment__content">
+
+  <h2>Пополнение счёта</h2>
+  <form [formGroup]="cardNumberGroup">
+    <label for="cardNumber">
+      Номер карты *
+      <input
+        [formControl]="getCardNumberControl()"
+        id="cardNumber"
+        [textMask]="{mask: cardMaskFunction, guide: false, showMask: true}"
+        placeholder="Номер карты">
+
+      <div *ngIf="getCardNumberControl().dirty">
+        <p [class.invalid]="getCardNumberControl().invalid"></p>
+        <p [class.valid]="getCardNumberControl().valid"></p>
+      </div>
+    </label>
+    <label for="cvv" class="medium">
+      Cvv *
+      <input  type="text"
+              id="cvv"
+              name="cvv"
+              formControlName="cvv"
+              maxlength="3"
+              minlength="3"
+              min="100"
+              max="999"
+              placeholder="Cvv код вашей карты"
+      >
+      <div class="error" *ngIf="cardNumberGroup.controls['cvv'].errors?.min">
+            Cvv должен быть больше 100
+      </div>
+      <div class="error" *ngIf="cardNumberGroup.controls['cvv'].errors?.max">
+        Cvv должен быть меньше 999
+      </div>
+      <div class="error" *ngIf="cardNumberGroup.controls['cvv'].errors?.required">
+        Поле Cvv не должно быть пустым
+      </div>
+
+    </label>
+    <label for="date" class="medium">
+      Месяц / Год *
+      <input  type="text" id="date" name="date" formControlName="date" placeholder="Месяц/год  вашей карты" maxlength="5">
+      <div class="error" *ngIf="cardNumberGroup.controls['date'].errors?.pattern">
+        Проверьте правильность поля пример:  07/23 или 11/25
+      </div>
+      <div class="error" *ngIf="cardNumberGroup.controls['date'].errors?.required">
+        Поле  Месяц / Год не должно быть пустым
+      </div>
+
+    </label>
+    <label for="value">
+     Сумма пополнения *
+      <input  type="text" id="value" name="value" formControlName="value" placeholder="Сумма пополнения">
+      <div class="error" *ngIf="cardNumberGroup.controls['value'].errors?.pattern">
+        Проверьте правильность поля пример: 07/23
+      </div>
+      <div class="error" *ngIf="cardNumberGroup.controls['value'].errors?.required">
+        Поле  Сумма пополнения не должно быть пустым
+      </div>
+
+    </label>
+    <button (click)="sumbitForm()">Пополнить счёт</button>
+  </form>
+
+</div>

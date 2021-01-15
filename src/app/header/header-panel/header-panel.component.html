@@ -1,15 +1,17 @@
 <div class="header__panel">
   <div class="container">
     <div class="header__panel__item">
-      <div class="header__panel__item__wishlist wishlist">
+      <div class="header__panel__item__wishlist header__wishlist">
         <app-wishlist
           [link]="wishlistLink"
           [icon]="wishlistIcon"
           [count]="wishlistCount"
+          routerLink="/account/wishlist"
+          (click)="open($event)"
         >
         </app-wishlist>
       </div>
-      <div class="header__panel__item__account account">
+      <div class="header__panel__item__account header__account">
           <app-icon-link
             *ngIf="!(storeService.user); else hide"
             [link]="loginLink"

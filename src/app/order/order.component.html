@@ -11,6 +11,12 @@
           <div class="error" *ngIf="orderForm.controls['city'].errors?.pattern">
             Название населённого пункта должно состоять из русских букв
           </div>
+          <div class="error" *ngIf="orderForm.controls['city'].errors?.minlength && !orderForm.controls['city'].errors?.pattern">
+            Название населённого пункта должно быть не короче 3 символов
+          </div>
+          <div class="error" *ngIf="orderForm.controls['city'].errors?.maxlength">
+            Название населённого пункта должно быть не длиннее 20 символов
+          </div>
           <div class="error" *ngIf="orderForm.controls['city'].errors?.required">
             Поле Населённый пункт не должно быть пустым
           </div>
@@ -20,6 +26,12 @@
           <input type="text" id="street" name="street" formControlName="street">
           <div class="error" *ngIf="orderForm.controls['street'].errors?.pattern">
             Название улицы должно состоять из русских букв
+          </div>
+          <div class="error" *ngIf="orderForm.controls['street'].errors?.minlength && !orderForm.controls['street'].errors?.pattern">
+            Название улицы должно быть не короче 5 символов
+          </div>
+          <div class="error" *ngIf="orderForm.controls['street'].errors?.maxlength">
+            Название улицы  должно быть не длиннее 20 символов
           </div>
           <div class="error" *ngIf="orderForm.controls['street'].errors?.required">
             Поле Улица не должно быть пустым
@@ -114,7 +126,10 @@
         </label>
         <label for="email" class="medium">
           Email *
-          <input  id="email" name="email" formControlName="email" >
+          <input type="text"  id="email" name="email" formControlName="email" >
+          <div class="error" *ngIf="orderForm.controls['email'].errors?.pattern">
+            Проверьте правильность вашей почты пример:  test@mail.ru
+          </div>
           <div class="error" *ngIf="orderForm.controls['email'].errors?.email">
             Проверьте правильность вашей почты пример:  test@mail.ru
           </div>
@@ -162,3 +177,5 @@
     </div>
   </div>
 </div>
+
+<simple-notifications></simple-notifications>

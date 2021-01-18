@@ -1,0 +1,46 @@
+<div class="comparison">
+  <div class="container">
+    <h2 class="comparison__title">
+      Comparison List
+    </h2>
+    <div class="comparison__wrapper" *ngIf="comparisonList.items.length > 0; else alternative">
+      <div class="comparison__item">
+        <div class="comparison__item__header">
+          <a routerLink="/catalog">Каталог</a>
+        </div>
+        <div class="comparison__item__params">
+          <div class="comparison__item__param" *ngFor="let option of optionsNames">
+            {{option}}
+          </div>
+        </div>
+      </div>
+      <div class="comparison__item" *ngFor="let item of comparisonList.items;let i = index">
+        <div class="comparison__item__header">
+            <button class="comparison__item__btn delete__btn"(click)="removeItem(item)"><i class="fa fa-times"></i></button>
+            <div class="comparison__item__image">
+              <img src="{{item.image}}" alt="{{item.title}}">
+            </div>
+            <h2 class="comparison__item__title">{{item.title}}</h2>
+          <div class="comparison__item__prices">
+            <h3 class="comparison__item__price" [ngClass]="{sale: item.sale}" >{{item.price}} $</h3>
+            <h3 class="comparison__item__price" [ngClass]="{main: item.sale}" *ngIf="item.sale">{{item.sale}} $</h3>
+          </div>
+          <div class="product__buttons">
+            <button class="about__btn" (click)="toProduct(item.id)"> Подробнее </button>
+          </div>
+        </div>
+        <div class="comparison__item__params">
+          <div class="comparison__item__param" *ngFor="let option of Object.values(comparisonList.items[i].options)">
+            {{option.value}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #alternative>
+      <p class="comparison__text">
+        Comparison list is empty, <a class="comparison__text__link" routerLink="/catalog">add something</a>
+      </p>
+    </ng-template>
+  </div>
+
+</div>

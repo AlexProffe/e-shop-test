@@ -37,6 +37,11 @@ const routes: Routes = [
     loadChildren: () => import('./account/account.module').then((m) => m.AccountModule),
     canActivate: [AuthGuardService],
   },
+  {
+    path: 'comparison',
+    loadChildren: () => import('./comparison/comparison.module').then( (m) => m.ComparisonModule),
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({

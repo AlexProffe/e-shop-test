@@ -1,3 +1,5 @@
+$red: #d23735;
+$green: #6fbb70;
 .order{
   .container{
     display: flex;
@@ -72,6 +74,12 @@
             border:2px solid #171717;
             padding: 10px 0px 10px 10px;
             margin: 10px 0;
+            &.invalid, &.ng-dirty {
+              border-color:  $red;
+            }
+            &.ng-valid{
+              border-color: $green;
+            }
           }
           textarea{
             width: 100%;
@@ -79,6 +87,12 @@
             padding: 10px 0px 10px 10px;
             min-height: 100px;
             margin: 10px 0;
+            &.invalid, &.ng-dirty {
+              border-color:  $red;
+            }
+            &.ng-valid{
+              border-color: $green;
+            }
           }
         }
       }

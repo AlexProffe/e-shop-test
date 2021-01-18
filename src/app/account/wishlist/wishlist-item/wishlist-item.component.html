@@ -3,6 +3,9 @@
     <img src="{{item.image}}" alt="Placeholder Image" class="wishlist__item__image">
     <h2 class="wishlist__item__title">{{item.title}}</h2>
     <button class="wishlist__item__button" (click)="moreInfo()">Подробнее</button>
+    <button class="remove__btn" (click)="removeItem(item)">
+      <i class="fa fa-times"></i>
+    </button>
   </div>
 </ng-container>
 <ng-template #showItems>

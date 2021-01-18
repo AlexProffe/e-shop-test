@@ -17,12 +17,10 @@
     </label>
     <label for="cvv" class="medium">
       Cvv *
-      <input  type="text"
+      <input  type="number"
               id="cvv"
               name="cvv"
               formControlName="cvv"
-              maxlength="3"
-              minlength="3"
               min="100"
               max="999"
               placeholder="Cvv код вашей карты"
@@ -31,7 +29,7 @@
             Cvv должен быть больше 100
       </div>
       <div class="error" *ngIf="cardNumberGroup.controls['cvv'].errors?.max">
-        Cvv должен быть меньше 999
+        Cvv должен быть меньше 9999
       </div>
       <div class="error" *ngIf="cardNumberGroup.controls['cvv'].errors?.required">
         Поле Cvv не должно быть пустым
@@ -51,9 +49,12 @@
     </label>
     <label for="value">
      Сумма пополнения *
-      <input  type="text" id="value" name="value" formControlName="value" placeholder="Сумма пополнения">
-      <div class="error" *ngIf="cardNumberGroup.controls['value'].errors?.pattern">
-        Проверьте правильность поля пример: 07/23
+      <input  type="number" id="value" name="value" formControlName="value" placeholder="Сумма пополнения">
+      <div class="error" *ngIf="cardNumberGroup.controls['value'].errors?.min">
+        Минимальная сумма пополнения 1
+      </div>
+      <div class="error" *ngIf="cardNumberGroup.controls['value'].errors?.max">
+        Максимальная сумма пополнения 10000000
       </div>
       <div class="error" *ngIf="cardNumberGroup.controls['value'].errors?.required">
         Поле  Сумма пополнения не должно быть пустым
@@ -62,5 +63,5 @@
     </label>
     <button (click)="sumbitForm()">Пополнить счёт</button>
   </form>
-
+  <simple-notifications></simple-notifications>
 </div>

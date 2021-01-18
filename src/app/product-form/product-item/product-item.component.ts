@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import firebase from 'firebase';
 import { switchMap, take, tap } from 'rxjs/operators';
+import { NotificationsService } from 'angular2-notifications';
 import { Product } from '../../Product';
 import { CRUDServiceService } from '../../crudservice.service';
 import { Image } from '../../Image';
@@ -19,6 +20,7 @@ export class ProductItemComponent implements OnInit {
     private crudServiceService: CRUDServiceService,
     private router: Router,
     private store: StoreService,
+    private notification: NotificationsService,
   ) {}
 
   @Input()
@@ -35,6 +37,7 @@ export class ProductItemComponent implements OnInit {
       url: this.product.image,
       alt: this.product.title,
     };
+    console.log(this.product);
   }
 
   public addToCart(): void {
@@ -57,6 +60,12 @@ export class ProductItemComponent implements OnInit {
               });
             }
             shopCart.cart.push(this.product);
+            this.notification.success('Успех', 'Товар успешно добавлен в корзину', {
+              timeOut: 2500,
+              showProgressBar: true,
+              pauseOnHover: true,
+              clickToClose: true,
+            });
             return this.crudServiceService.updateCart('shops', shopCart.id, shopCart.cart);
           }),
           tap((value: string) => {
@@ -66,6 +75,12 @@ export class ProductItemComponent implements OnInit {
         )
         .subscribe();
     } else {
+      this.notification.error('Ошибка', 'Сначала войдите в аккаунт', {
+        timeOut: 2500,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+      });
       this.router.navigate(['/login']);
     }
   }
@@ -89,13 +104,24 @@ export class ProductItemComponent implements OnInit {
             const index = value1[0].items.findIndex((item) => item.id === this.product.id);
             if (index === -1) {
               wishlist.items.push(this.product);
+              this.notification.success('Успех', 'Товар добавлен в список желаемого', {
+                timeOut: 2500,
+                showProgressBar: true,
+                pauseOnHover: true,
+                clickToClose: true,
+              });
               return this.crudServiceService.updateWishlist(
                 'wishlists',
                 wishlist.id,
                 wishlist.items,
               );
             }
-            console.log('All ok');
+            this.notification.error('Ошибка', 'Товар удалён из списка желаемого', {
+              timeOut: 2500,
+              showProgressBar: true,
+              pauseOnHover: true,
+              clickToClose: true,
+            });
             const newWishlist = wishlist.items;
             newWishlist.splice(index, 1);
             return this.crudServiceService.updateWishlist('wishlists', wishlist.id, newWishlist);
@@ -107,6 +133,74 @@ export class ProductItemComponent implements OnInit {
         )
         .subscribe();
     } else {
+      this.notification.error('Ошибка', 'Сначала войдите в аккаунт', {
+        timeOut: 2500,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+      });
+      this.router.navigate(['/login']);
+    }
+  }
+
+  public addToComparisonList(): void {
+    if (this.store.user) {
+      this.crudServiceService
+        .getQueryData('comparisons', {
+          fieldPath: 'uid',
+          value: this.store.user.uid,
+        })
+        .pipe(
+          switchMap((value1: Wishlist[]) => {
+            const comparison: Wishlist = value1[0];
+            if (!comparison) {
+              return this.crudServiceService.createEntity('comparisons', {
+                items: [this.product],
+                uid: this.store.user.uid,
+              });
+            }
+            const index = value1[0].items.findIndex((item) => item.id === this.product.id);
+            if (index === -1) {
+              comparison.items.push(this.product);
+              this.notification.success('Успех', 'Товар добавлен в сравнение', {
+                timeOut: 2500,
+                showProgressBar: true,
+                pauseOnHover: true,
+                clickToClose: true,
+              });
+              return this.crudServiceService.updateWishlist(
+                'comparisons',
+                comparison.id,
+                comparison.items,
+              );
+            }
+            this.notification.error('Ошибка', 'Товар удалён из сравнения', {
+              timeOut: 2500,
+              showProgressBar: true,
+              pauseOnHover: true,
+              clickToClose: true,
+            });
+            const newWishlist = comparison.items;
+            newWishlist.splice(index, 1);
+            return this.crudServiceService.updateWishlist(
+              'comparisons',
+              comparison.id,
+              newWishlist,
+            );
+          }),
+          tap((value: string) => {
+            this.store.comparisonList = { id: value };
+          }),
+          take(1),
+        )
+        .subscribe();
+    } else {
+      this.notification.error('Ошибка', 'Сначала войдите в аккаунт', {
+        timeOut: 2500,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+      });
       this.router.navigate(['/login']);
     }
   }

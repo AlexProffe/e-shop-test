@@ -34,7 +34,7 @@ export class HeaderNavComponent implements OnInit {
       class: 'header__menu__link',
     },
     {
-      url: '/comprasion',
+      url: '/comparison',
       title: 'Сomparison',
       target: '_self',
       class: 'header__menu__link',

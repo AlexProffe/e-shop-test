@@ -14,11 +14,15 @@ export class StoreService {
 
   public wishlist$: BehaviorSubject<Wishlist> = new BehaviorSubject<Wishlist>(null);
 
+  public comparisonList$: BehaviorSubject<Wishlist> = new BehaviorSubject<Wishlist>(null);
+
   private _user: firebase.User;
 
   private _shop: Shop;
 
   private _wishlist: Wishlist;
+
+  private _comparisonList: Wishlist;
 
   get wishlist(): Wishlist {
     return this._wishlist;
@@ -28,6 +32,17 @@ export class StoreService {
     if (this._wishlist !== value) {
       this._wishlist = value;
       this.wishlist$.next(value);
+    }
+  }
+
+  get comparisonList(): Wishlist {
+    return this._comparisonList;
+  }
+
+  set comparisonList(value: Wishlist) {
+    if (this._comparisonList !== value) {
+      this._comparisonList = value;
+      this.comparisonList$.next(value);
     }
   }
 

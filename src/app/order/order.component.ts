@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { switchMap, take, tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
+import { NotificationsService } from 'angular2-notifications';
 import { Product } from '../Product';
 import { StoreService } from '../store.service';
 import { CRUDServiceService } from '../crudservice.service';
 import { Shop } from '../Shop';
 import { User } from '../User';
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-order',
@@ -17,12 +18,14 @@ export class OrderComponent implements OnInit {
   orderForm = new FormGroup({
     city: new FormControl('', [
       Validators.required,
-      Validators.minLength(5),
+      Validators.minLength(3),
+      Validators.maxLength(20),
       Validators.pattern(/[А-я]/),
     ]),
     street: new FormControl('', [
       Validators.required,
-      Validators.minLength(5),
+      Validators.minLength(3),
+      Validators.maxLength(20),
       Validators.pattern(/[А-я]/),
     ]),
     house: new FormControl('', [Validators.required, Validators.min(1), Validators.max(999)]),
@@ -43,7 +46,8 @@ export class OrderComponent implements OnInit {
     ]),
     email: new FormControl('', [
       Validators.required,
-      Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$'),
+      Validators.email,
+      Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
     ]),
     phone: new FormControl('', [
       Validators.required,
@@ -118,22 +122,31 @@ export class OrderComponent implements OnInit {
                     const [userInfo] = value;
                     let finalBalance = +userInfo.balance;
                     finalBalance -= +this.total;
-                    alert('Заказ успешно оплачен, спасибо за покупку');
-                    this.router.navigate(['/']);
+                    this.notification.success('Успех', 'Товар успешно оплачен', {
+                      timeOut: 2500,
+                      showProgressBar: true,
+                      pauseOnHover: true,
+                      clickToClose: true,
+                    });
                     return this.crudServiceService
                       .updateUserBalance('users', this.store.user.uid, finalBalance)
                       .pipe(
                         tap((value3) => {
-                          console.log(value3)
+                          console.log(value3);
                           return this.crudServiceService
-                            .getQueryData('shops', { fieldPath: 'uid', value: this.store.user.uid })
+                            .getQueryMultipleData('shops', {
+                              firstFieldPath: 'uid',
+                              firstValue: this.store.user.uid,
+                              secondFieldPath: 'status',
+                              secondValue: 'active',
+                            })
                             .pipe(
                               switchMap((value1: Shop[]) => {
-                                console.log(value1)
-                                const [id] = value1;
+                                console.log(value1);
+                                const { id } = value1[0];
                                 return this.crudServiceService.updateCartObject(
                                   'shops',
-                                  id.id,
+                                  id,
                                   'bought',
                                 );
                               }),
@@ -149,15 +162,17 @@ export class OrderComponent implements OnInit {
         )
         .subscribe();
     } else {
-      alert('Error');
+      this.notification.error('Ошибка', 'Что-то пошло не так', {
+        timeOut: 2500,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+      });
     }
   }
 
   isControlInvalid(controlName: string): boolean {
     const control = this.orderForm.controls[controlName];
-    if (controlName === 'phone') {
-      console.log(control);
-    }
     const result = control.invalid && control.touched;
 
     return result;
@@ -168,6 +183,7 @@ export class OrderComponent implements OnInit {
     private store: StoreService,
     private crudServiceService: CRUDServiceService,
     private router: Router,
+    private notification: NotificationsService,
   ) {}
 
   ngOnInit(): void {
@@ -192,8 +208,7 @@ export class OrderComponent implements OnInit {
           this.crudServiceService
             .getQueryData('users', { fieldPath: 'uid', value: value.uid })
             .subscribe((value2) => {
-              this.user = value2[0];
-              console.log(this.user);
+              [this.user] = value2;
             });
         });
     });

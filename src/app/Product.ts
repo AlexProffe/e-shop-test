@@ -6,4 +6,5 @@ export interface Product {
   id?: string;
   image?: string;
   sale?: number;
+  options?: [];
 }

@@ -1,7 +1,10 @@
 <ng-container *ngIf="product.title.length > 1; else show">
   <div class="product">
-    <button class="product__wishlist__btn" (click)="addToWishlist()">
+    <button class="product__wishlist__btn btn" (click)="addToWishlist()">
       <i class="fa fa-heart"></i>
+    </button>
+    <button class="product__comparison__btn btn" (click)="addToComparisonList()">
+      <i class="fa fa-exchange"></i>
     </button>
     <app-image
       [image]="image"
@@ -40,3 +43,4 @@
   </div>
 
 </ng-template>
+<simple-notifications></simple-notifications>

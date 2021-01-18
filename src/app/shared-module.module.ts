@@ -7,6 +7,7 @@ import { ImageLinkComponent } from './commonComponents/image-link/image-link.com
 import { IconLinkComponent } from './commonComponents/icon-link/icon-link.component';
 import { ViewProductsComponent } from './product-form/view-products/view-products.component';
 import { ProductItemComponent } from './product-form/product-item/product-item.component';
+import {SimpleNotificationsModule} from "angular2-notifications";
 @NgModule({
   declarations: [
     ImageComponent,
@@ -16,7 +17,7 @@ import { ProductItemComponent } from './product-form/product-item/product-item.c
     ViewProductsComponent,
     ProductItemComponent,
   ],
-  imports: [CommonModule],
+  imports: [CommonModule, SimpleNotificationsModule.forRoot()],
   exports: [
     RouterModule,
     ImageComponent,

@@ -56,6 +56,25 @@ export class CRUDServiceService {
       );
   }
 
+  public getOrderData<T>(collectionName: string, ): Observable<T[]> {
+    return this.firestoreService
+      .collection(collectionName, (ref) => {
+        const query: firestore.Query = ref;
+        return query.orderBy('options.order');
+      })
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
+            const data: any = a.payload.doc.data();
+            const { id } = a.payload.doc;
+            return { id, ...data } as T;
+          }),
+        ),
+        take(1),
+      );
+  }
+
   public getQueryMultipleData<T>(
     collectionName: string,
     { firstFieldPath, firstValue, secondFieldPath, secondValue },

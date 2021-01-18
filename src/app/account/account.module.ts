@@ -1,14 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+import { SimpleNotificationsModule } from 'angular2-notifications';
 import { SharedModuleModule } from '../shared-module.module';
 import { AccountComponent } from './account.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
 import { InfoComponent } from './info/info.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrdersComponent } from './orders/orders.component';
-import {ViewOrderComponent} from "./view-order/view-order.component";
-import {AuthGuardService} from "../auth-guard.service";
+import { ViewOrderComponent } from './view-order/view-order.component';
+import { AuthGuardService } from '../auth-guard.service';
 
 const accountRoutes: Routes = [
   {
@@ -47,7 +48,12 @@ const routes: Routes = [{ path: '', component: AccountComponent, children: accou
 
 @NgModule({
   declarations: [AccountComponent],
-  imports: [CommonModule, SharedModuleModule, RouterModule.forChild(routes)],
+  imports: [
+    CommonModule,
+    SharedModuleModule,
+    RouterModule.forChild(routes),
+    SimpleNotificationsModule.forRoot(),
+  ],
   exports: [RouterModule],
 })
 export class AccountModule {}

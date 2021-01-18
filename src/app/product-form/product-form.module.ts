@@ -16,6 +16,7 @@ const routes: Routes = [{ path: '', component: ProductFormComponent }];
     ReactiveFormsModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
+
   ],
 })
 export class ProductFormModule {}

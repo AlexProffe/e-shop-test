@@ -25,9 +25,21 @@
   &__wrapper{
     display: flex;
     justify-content: center;
+    @media screen and (max-width: 760.01px) {
+      flex-wrap: wrap;
+    }
     .comparison__item{
       display: flex;
       padding-top: 20px;
+      @media screen and (max-width: 800.01px){
+        &:first-child{
+          display: none;
+        }
+        width:25%;
+      }
+      @media screen and (max-width: 760.01px) {
+        width: 95%;
+      }
       flex-direction: column;
       position: relative;
       align-items: center;
@@ -41,7 +53,7 @@
         background-color: transparent;
         border: 2px solid black;
         transition: 0.3s all;
-
+        margin-bottom: 10px;
         &:hover {
           transition: 0.3s all;
           background-color: #8dc63f;
@@ -63,7 +75,7 @@
         .comparison__item__param{
           font-size: 18px;
           width: 100%;
-          padding: 20px;
+          padding: 20px 0px;
           border-top: 1px solid black;
           border-left: 1px solid black;
           display: flex;
@@ -77,8 +89,7 @@
       }
       &__header{
         width: 100%;
-        max-height: 300px;
-        min-height: 300px;
+        min-height: 360px;
         display: flex;
         flex-direction: column;
         align-items: center;

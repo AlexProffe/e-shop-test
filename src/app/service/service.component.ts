@@ -15,7 +15,7 @@ import {
   templateUrl: './service.component.html',
   styleUrls: ['./service.component.scss'],
 })
-export class ServiceComponent{
+export class ServiceComponent {
   @Input()
   public test: string;
 

@@ -282,6 +282,20 @@ header{
         justify-content: center;
         align-items: center;
       }
+      .menu-open{
+        display: none;
+        background-color: transparent;
+        font-size: 24px;
+        i{
+          color:white;
+        }
+        @media screen and (max-width: 768.01px){
+          display: flex;
+          background-color: transparent;
+          justify-content: center;
+          align-items: center;
+        }
+      }
       .header__menu{
         width: 100%;
         height: 100%;
@@ -289,16 +303,7 @@ header{
         @media screen and (max-width: 768.01px){
           width: auto;
         }
-        .menu-open{
-          display: none;
-          background-color: transparent;
-          font-size: 24px;
-          @media screen and (max-width: 768.01px){
-           display: flex;
-            justify-content: center;
-            align-items: center;
-          }
-        }
+
         justify-content: space-between;
         align-items: center;
         &__item{
@@ -418,14 +423,15 @@ header{
         position: absolute;
         display: flex;
         z-index: 2;
-        background-color: transparent;
+        background-color: lightgray;
         justify-content: center;
         align-items: center;
         top:50%;
         transform: translate(0%,-50%);
-        right:20px;
+        padding: 10px;
+        right:0px;
         &.arrow--left{
-          left:20px;
+          left:0px;
           right: initial;
           transform: translate(0, -50%);
         }
@@ -444,23 +450,46 @@ header{
 .products{
   width: 100%;
   display: flex;
+  @media screen and (max-width: 1120.01px){
+    justify-content: center;
+
+  }
   flex-wrap: wrap;
-  justify-content: space-around;
   align-items: center;
+  app-product-item{
+    max-width: 350px;
+    width: 100%;
+    @media screen and (max-width: 400.99px) {
+      max-width: 275px;
+    }
+    &:nth-child(2n+1){
+      @media screen and (max-width: 1120.01px){
+        margin-right: 20px;
+      }
+      @media screen and (max-width: 720.01px){
+        margin-right: 0;
+      }
+    }
+    &:nth-child(3n+2){
+      @media screen and (max-width: 1100.01px){
+        margin: 0;
+      }
+      margin: 0px 25px;
+    }
+  }
   app-view-products{
     width: 45%;
+
   }
-  app-product-item{
-    width: 350px;
-    padding: 0px 10px;
-  }
+
   .product{
-    margin: 30px 0;
+    margin: 30px 10px;
     width: 100%;
-    padding: 20px 0px;
+    padding: 20px 10px;
     transition: 0.3s all;
     display: flex;
     position: relative;
+
     &__wishlist__btn{
       top:0;
       right: 0;
@@ -517,6 +546,9 @@ header{
     background-color: #fafafa;
     &__buttons{
       width: 100%;
+      @media screen and (max-width: 400.99px) {
+        flex-direction: column;
+      }
       margin-top: 20px;
       display: flex;
       justify-content: space-around;
@@ -524,6 +556,7 @@ header{
       button{
         font-size: 18px;
         line-height: 1;
+        margin-bottom: 10px;
         padding: 7.5px 15px;
         text-transform: uppercase;
         outline: none;
@@ -664,11 +697,17 @@ header{
   }
 }
 .wishlist{
-  .wishlist__title{
+  &__title{
     font-size: 28px;
     text-transform: uppercase;
     margin-bottom: 25px;
     text-align: center;
+  }
+  &__alternative{
+    font-size: 18px;
+    a{
+      color:#e5493a;
+    }
   }
   &__wrapper{
     @media screen and (max-width: 850.01px){

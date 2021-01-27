@@ -37,7 +37,6 @@ export class ProductItemComponent implements OnInit {
       url: this.product.image,
       alt: this.product.title,
     };
-    console.log(this.product);
   }
 
   public addToCart(): void {
@@ -161,13 +160,26 @@ export class ProductItemComponent implements OnInit {
             }
             const index = value1[0].items.findIndex((item) => item.id === this.product.id);
             if (index === -1) {
-              comparison.items.push(this.product);
-              this.notification.success('Успех', 'Товар добавлен в сравнение', {
-                timeOut: 2500,
-                showProgressBar: true,
-                pauseOnHover: true,
-                clickToClose: true,
-              });
+              if (value1[0].items.length >= 4) {
+                this.notification.error(
+                  'Ошибка',
+                  'Нельзя добавить больше 4 товаров в список сравнения',
+                  {
+                    timeOut: 2500,
+                    showProgressBar: true,
+                    pauseOnHover: true,
+                    clickToClose: true,
+                  },
+                );
+              } else {
+                comparison.items.push(this.product);
+                this.notification.success('Успех', 'Товар добавлен в сравнение', {
+                  timeOut: 2500,
+                  showProgressBar: true,
+                  pauseOnHover: true,
+                  clickToClose: true,
+                });
+              }
               return this.crudServiceService.updateWishlist(
                 'comparisons',
                 comparison.id,

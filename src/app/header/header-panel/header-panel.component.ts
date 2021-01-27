@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import firebase from 'firebase';
-import { filter, switchMap } from 'rxjs/operators';
+import { filter, switchMap, tap } from 'rxjs/operators';
 import { Icon } from '../../Icon';
 import { Link } from '../../Link';
 import { AuthService } from '../../auth.service';
@@ -65,6 +65,8 @@ export class HeaderPanelComponent implements OnInit, OnDestroy {
 
   public logout($event): void {
     this.storeService.shop = null;
+    this.crudServiceService.beforeLogout.next();
+    this.crudServiceService.beforeLogout.complete();
     $event.preventDefault();
     this.storeService.user$.subscribe((value1: firebase.User) => {
       this.user = value1;

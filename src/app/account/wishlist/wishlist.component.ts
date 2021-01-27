@@ -4,7 +4,7 @@ import { Product } from '../../Product';
 import { Shop } from '../../Shop';
 import { StoreService } from '../../store.service';
 import { CRUDServiceService } from '../../crudservice.service';
-import {Wishlist} from "../../Wishlist";
+import { Wishlist } from '../../Wishlist';
 
 @Component({
   selector: 'app-wishlist',

@@ -8,9 +8,8 @@ describe('ComparisonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ComparisonComponent ]
-    })
-    .compileComponents();
+      declarations: [ComparisonComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

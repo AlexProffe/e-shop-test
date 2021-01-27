@@ -8,7 +8,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import firebase from 'firebase';
-import { distinctUntilChanged, filter, switchMap, take, takeWhile, tap } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  take,
+  takeUntil,
+  takeWhile,
+  tap,
+} from 'rxjs/operators';
 import { Link } from '../../Link';
 import { Icon } from '../../Icon';
 import { Product } from '../../Product';
@@ -120,6 +128,7 @@ export class MenuComponent implements OnInit {
         }),
         switchMap((value) => {
           return this.crudServiceService.handleShop('shops', value.id).pipe(
+            takeUntil(this.crudServiceService.beforeLogout),
             takeWhile((shop: Shop) => {
               return this.currentShopId === shop.id;
             }),
@@ -136,15 +145,31 @@ export class MenuComponent implements OnInit {
           return this.crudServiceService
             .getQueryData('users', {
               fieldPath: 'uid',
-              value: this.storeService.user.uid,
+              value: value.userID,
             })
             .pipe(
               tap((value1: firebase.User[]) => {
-                console.log(value1);
-                this.storeService.user = value1[0];
+                [this.storeService.user] = value1;
                 return [];
               }),
             );
+        }),
+      )
+      .subscribe();
+    this.storeService.shop$
+      .pipe(
+        tap((value) => {
+          if (!value) {
+            this.cartItems = [];
+            this.cartCountLink = {
+              url: '#',
+              title: `${this.cartItems.length}`,
+              target: '_self',
+              class: 'cart-circle',
+            };
+            return [];
+          }
+          return [];
         }),
       )
       .subscribe();

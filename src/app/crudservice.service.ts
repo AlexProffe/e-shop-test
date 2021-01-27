@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
-import { from, Observable } from 'rxjs';
+import { from, Observable, Subject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import firebase from 'firebase';
 import { Query } from './Query';
@@ -8,12 +8,15 @@ import { Shop } from './Shop';
 import firestore = firebase.firestore;
 import DocumentReference = firebase.firestore.DocumentReference;
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
+import OrderByDirection = firebase.firestore.OrderByDirection;
 
 @Injectable({
   providedIn: 'root',
 })
 export class CRUDServiceService {
   constructor(private firestoreService: AngularFirestore) {}
+
+  public beforeLogout: Subject<void> = new Subject<void>();
 
   public createEntity(collectionName: string, data: {}): Observable<string> {
     return from(this.firestoreService.collection(collectionName).add(data)).pipe(
@@ -56,7 +59,53 @@ export class CRUDServiceService {
       );
   }
 
-  public getOrderData<T>(collectionName: string, ): Observable<T[]> {
+  public getFilteredPriceProducts<T>(
+    collectionName: string,
+    { fieldPath = 'price', minValue = 35, maxValue = 110, limit = 6 },
+  ): Observable<T[]> {
+    return this.firestoreService
+      .collection(collectionName, (ref) => {
+        const query: firestore.Query = ref;
+        return query.where(fieldPath, '>=', minValue).where(fieldPath, '<=', maxValue).limit(limit);
+      })
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
+            const data: any = a.payload.doc.data();
+            const { id } = a.payload.doc;
+            return { id, ...data } as T;
+          }),
+        ),
+        take(1),
+      );
+  }
+
+  public getFilterProducts<T>(
+    collectionName: string,
+    queryTitle: string,
+    queryDirection: OrderByDirection,
+    limit: number,
+  ): Observable<T[]> {
+    return this.firestoreService
+      .collection(collectionName, (ref) => {
+        const query: firestore.Query = ref;
+        return query.orderBy(`${queryTitle}`, queryDirection).limit(limit);
+      })
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
+            const data: any = a.payload.doc.data();
+            const { id } = a.payload.doc;
+            return { id, ...data } as T;
+          }),
+        ),
+        take(1),
+      );
+  }
+
+  public getOrderData<T>(collectionName: string): Observable<T[]> {
     return this.firestoreService
       .collection(collectionName, (ref) => {
         const query: firestore.Query = ref;

@@ -6,15 +6,28 @@
       display: flex;
       justify-content: space-around;
       align-items: center;
+      flex-wrap: wrap;
       @media screen and (max-width:600px){
         flex-direction: column;
         justify-content: initial;
         align-items: center;
       }
+      &__image{
+        max-width: 360px;
+        width: 100%;
+      }
       &__info{
         align-self: flex-start;
+        width: 100%;
+        max-width: 600px;
+        padding: 0px 10px;
         @media screen and (max-width:600px) {
           align-self: center;
+        }
+        @media screen and (max-width:980px){
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
       }
       &__title{
@@ -22,6 +35,9 @@
         color:#171717;
         text-transform: uppercase;
         margin-bottom: 25px;
+        @media screen and (max-width:980px){
+         text-align: center;
+        }
         @media screen and (max-width:600px){
           margin-top: 15px;
         }
@@ -37,6 +53,9 @@
         justify-content: space-around;
         align-items: center;
         margin-bottom: 25px;
+        min-width: 120px;
+        max-width: 120px;
+        width: 100%;
       }
       &__price{
         font-size: 22px;

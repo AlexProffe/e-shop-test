@@ -39,7 +39,7 @@ const routes: Routes = [
   },
   {
     path: 'comparison',
-    loadChildren: () => import('./comparison/comparison.module').then( (m) => m.ComparisonModule),
+    loadChildren: () => import('./comparison/comparison.module').then((m) => m.ComparisonModule),
     canActivate: [AuthGuardService],
   },
 ];

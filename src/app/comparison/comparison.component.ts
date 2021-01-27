@@ -44,15 +44,12 @@ export class ComparisonComponent implements OnInit {
     this.crudServiceService
       .getQueryData('comparisons', { fieldPath: 'uid', value: this.storeService.user.uid })
       .subscribe((value: Wishlist[]) => {
-        this.comparisonList = value[0];
-        console.log(value);
+        [this.comparisonList] = value;
         this.comparisonList.items.forEach((item) => {
           item.options.sort((a: any, b: any) => a.order - b.order);
         });
       });
-    console.log(this.optionsNames);
     this.crudServiceService.getOrderData('products').subscribe((value) => {
-      console.log(value);
     });
   }
 }

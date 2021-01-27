@@ -26,13 +26,11 @@ export class WishlistComponent implements OnInit {
     this.storeService.user$
       .pipe(
         switchMap((value) => {
-          console.log(value);
           if (value) {
             return this.crudServiceService
               .getQueryData('wishlists', { fieldPath: 'uid', value: value.uid })
               .pipe(
                 switchMap((value1) => {
-                  console.log(value1);
                   if (value1.length) {
                     this.storeService.wishlist = value1[0];
                     return [];

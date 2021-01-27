@@ -1,11 +1,14 @@
 <div class="wishlist">
   <h2 class="wishlist__title">Wishlist</h2>
-  <div class="wishlist__wrapper">
+  <div class="wishlist__wrapper" *ngIf="items.length > 0; else alternative">
     <ng-container *ngFor="let item of items">
       <app-wishlist-item [item]="item">
 
       </app-wishlist-item>
     </ng-container>
   </div>
+  <ng-template #alternative>
+      <p class="wishlist__alternative">Нет товаров в списке желаемого. <a href="#" routerLink="/catalog">Добавьте их</a></p>
+  </ng-template>
 
 </div>

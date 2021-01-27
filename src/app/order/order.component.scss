@@ -131,6 +131,10 @@ $green: #6fbb70;
       @media screen and (max-width: 640.01px){
         width: 85%;
       }
+      &__product__title{
+        max-width: 60%;
+        width: 100%;
+      }
       align-items: center;
       &__header{
         width: 100%;

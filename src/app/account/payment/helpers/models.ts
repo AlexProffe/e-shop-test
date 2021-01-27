@@ -8,7 +8,7 @@ export interface CardValidation {
   luhn: boolean;
 }
 
-export enum CardBrandEnum{
+export enum CardBrandEnum {
   VISA = 'VISA',
   MASTERCARD = 'MASTERCARD',
   AMERICANEXPRESS = 'AMERICANEXPRESS',
@@ -18,5 +18,5 @@ export enum CardBrandEnum{
   MAESTRO = 'MAESTRO',
   UNIONPAY = 'UNIONPAY',
   DANKORT = 'DANKORT',
-  FORBRUGSFORENINGEN = 'FORBRUGSFORENINGEN'
-};
+  FORBRUGSFORENINGEN = 'FORBRUGSFORENINGEN',
+}

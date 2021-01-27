@@ -1,7 +1,15 @@
-<div class="catalog">
+<div class="catalog" appScrollable (scrollPosition)="scrollHandler($event)">
   <div class="container">
+
     <h2 class="catalog__title title">Каталог</h2>
-    <app-view-products>
+    <select name="filters" id="filter" (change)="filter($event)">
+      <option value="nameAsc">По имени( А-Я)</option>
+      <option value="nameDesc">По имени( Я-А )</option>
+      <option value="priceAsc">По цене( по возрастанию)</option>
+      <option value="priceDesc">По цене( по убыванию)</option>
+      <option value="sale">Акционные</option>
+    </select>
+    <app-view-products [productsList]="productsList">
 
     </app-view-products>
   </div>

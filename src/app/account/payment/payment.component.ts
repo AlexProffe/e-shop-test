@@ -64,7 +64,7 @@ export class PaymentComponent implements OnInit {
             let finalBalance = +userInfo.balance || 0;
             finalBalance += +data.balance;
             console.log(finalBalance);
-            this.notification.success('Успех', 'Счёт пополнен',{
+            this.notification.success('Успех', 'Счёт пополнен', {
               timeOut: 1800,
               showProgressBar: true,
               clickToClose: true,

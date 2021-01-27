@@ -108,6 +108,7 @@ export class OrderComponent implements OnInit {
         minute: '2-digit',
         second: '2-digit',
       }),
+      products: this.cartItems,
     };
     if (this.user.balance > this.total) {
       this.crudServiceService
@@ -128,31 +129,17 @@ export class OrderComponent implements OnInit {
                       pauseOnHover: true,
                       clickToClose: true,
                     });
-                    return this.crudServiceService
-                      .updateUserBalance('users', this.store.user.uid, finalBalance)
-                      .pipe(
-                        tap((value3) => {
-                          console.log(value3);
-                          return this.crudServiceService
-                            .getQueryMultipleData('shops', {
-                              firstFieldPath: 'uid',
-                              firstValue: this.store.user.uid,
-                              secondFieldPath: 'status',
-                              secondValue: 'active',
-                            })
-                            .pipe(
-                              switchMap((value1: Shop[]) => {
-                                console.log(value1);
-                                const { id } = value1[0];
-                                return this.crudServiceService.updateCartObject(
-                                  'shops',
-                                  id,
-                                  'bought',
-                                );
-                              }),
-                            );
-                        }),
-                      );
+                    this.crudServiceService.updateCartObject('shops', this.store.shop.id, 'bought');
+                    this.store.shop = null;
+                    this.crudServiceService.beforeLogout.next();
+                    this.crudServiceService.beforeLogout.complete();
+                    this.cartItems = [];
+                    this.total = 0;
+                    this.crudServiceService.updateUserBalance(
+                      'users',
+                      this.store.user.uid,
+                      finalBalance,
+                    );
                   }),
                 );
             }

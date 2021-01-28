@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { switchMap, take } from 'rxjs/operators';
-import { Icon } from '../../Icon';
-import { Link } from '../../Link';
-import { StoreService } from '../../store.service';
-import { CRUDServiceService } from '../../crudservice.service';
+import { Icon } from '../../Interfaces/Icon';
+import { Link } from '../../Interfaces/Link';
+import { StoreService } from '../../Services/store.service';
+import { CRUDServiceService } from '../../Services/crudservice.service';
 
 @Component({
   selector: 'app-wishlist',

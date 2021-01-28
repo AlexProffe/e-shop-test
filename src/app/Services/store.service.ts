@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import firebase from 'firebase';
-import { Shop } from './Shop';
-import { Wishlist } from './Wishlist';
+import { Shop } from '../Interfaces/Shop';
+import { Wishlist } from '../Interfaces/Wishlist';
 
 @Injectable({
   providedIn: 'root',

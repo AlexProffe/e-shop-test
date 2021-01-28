@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Product } from '../Product';
-import { CRUDServiceService } from '../crudservice.service';
+import { Product } from '../Interfaces/Product';
+import { CRUDServiceService } from '../Services/crudservice.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit {
       .getFilteredPriceProducts<Product>('products', {
         fieldPath: 'price',
         maxValue: undefined,
-        minValue: 30,
+        minValue: undefined,
         limit: 6,
       })
       .subscribe((value: Product[]) => {

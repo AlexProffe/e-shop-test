@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import firebase from 'firebase';
-import { CRUDServiceService } from './crudservice.service';
-import { Book } from './Book';
-import { AuthService } from './auth.service';
-import { StoreService } from './store.service';
+import { CRUDServiceService } from './Services/crudservice.service';
+import { Book } from './Interfaces/Book';
+import { AuthService } from './Services/auth.service';
+import { StoreService } from './Services/store.service';
 
 @Component({
   selector: 'app-root',

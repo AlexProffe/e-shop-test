@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Link } from '../../Link';
-import { Image } from '../../Image';
+import { Link } from '../../Interfaces/Link';
+import { Image } from '../../Interfaces/Image';
 
 @Component({
   selector: 'app-image-link',

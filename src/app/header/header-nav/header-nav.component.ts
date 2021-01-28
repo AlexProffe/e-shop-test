@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Image } from '../../Image';
-import { Link } from '../../Link';
+import { Image } from '../../Interfaces/Image';
+import { Link } from '../../Interfaces/Link';
 
 @Component({
   selector: 'app-header-nav',

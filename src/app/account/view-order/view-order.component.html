@@ -1,1 +1,20 @@
-<p>view-order works! {{id}}</p>
+<div class="order-view">
+ <div class="order-view__wrapper" *ngIf="!loading; else alternative">
+   <h2 class="order-view__date">{{order.date}}</h2>
+   <h2 class="order-view__number" (click)="CopyLink(order.id)">{{order.id}}</h2>
+   <div class="order-view__product" *ngFor="let product of order.products">
+     <h2 class="order-view__product__title">{{product.title}}</h2>
+     <h2 class="order-view__product__price" *ngIf="!product.sale">{{product.price}}$</h2>
+     <h2 class="order-view__product__price" *ngIf="product.sale" [ngClass]="{main: product.sale}">{{product.sale}}$</h2>
+
+   </div>
+   <h2 class="order-view__total">Total: {{ order.total}} $</h2>
+   <h2 class="order-view__info">{{order.name + ' ' +  order.surname}}</h2>
+   <h2 class="order-view__phone">{{order.email}}</h2>
+ </div>
+  <ng-template #alternative>
+    Loading...
+  </ng-template>
+  <simple-notifications></simple-notifications>
+</div>
+

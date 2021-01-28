@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
 import { luhnValidator } from './validators/luhnValidator';
 import { getValidationConfigFromCardNo } from './helpers/card.helper';
-import { CRUDServiceService } from '../../crudservice.service';
-import { StoreService } from '../../store.service';
-import { User } from '../../User';
+import { CRUDServiceService } from '../../Services/crudservice.service';
+import { StoreService } from '../../Services/store.service';
+import { User } from '../../Interfaces/User';
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',

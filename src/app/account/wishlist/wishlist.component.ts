@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { distinctUntilChanged, filter, switchMap, takeWhile, tap } from 'rxjs/operators';
-import { Product } from '../../Product';
-import { Shop } from '../../Shop';
-import { StoreService } from '../../store.service';
-import { CRUDServiceService } from '../../crudservice.service';
-import { Wishlist } from '../../Wishlist';
+import { Product } from '../../Interfaces/Product';
+import { Shop } from '../../Interfaces/Shop';
+import { StoreService } from '../../Services/store.service';
+import { CRUDServiceService } from '../../Services/crudservice.service';
+import { Wishlist } from '../../Interfaces/Wishlist';
 
 @Component({
   selector: 'app-wishlist',

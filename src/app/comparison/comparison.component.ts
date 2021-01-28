@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { StoreService } from '../store.service';
-import { CRUDServiceService } from '../crudservice.service';
-import { Product } from '../Product';
-import { Wishlist } from '../Wishlist';
+import { StoreService } from '../Services/store.service';
+import { CRUDServiceService } from '../Services/crudservice.service';
+import { Product } from '../Interfaces/Product';
+import { Wishlist } from '../Interfaces/Wishlist';
 
 @Component({
   selector: 'app-comparison',

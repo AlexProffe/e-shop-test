@@ -2,7 +2,16 @@
   <div class="container">
 
     <h2 class="catalog__title title">Каталог</h2>
-    <select name="filters" id="filter" (change)="filter($event)">
+    <select name="filters"  id="filter" (change)="filter($event)">
+      <option value="default" selected disabled>Сортировка </option>
+      <option value="nameAsc">По имени( А-Я)</option>
+      <option value="nameDesc">По имени( Я-А )</option>
+      <option value="priceAsc">По цене( по возрастанию)</option>
+      <option value="priceDesc">По цене( по убыванию)</option>
+      <option value="sale">Акционные</option>
+    </select>
+    <select name="sorts"  id="sort" (change)="filter($event)">
+      <option value="default" selected disabled>Коллекция </option>
       <option value="nameAsc">По имени( А-Я)</option>
       <option value="nameDesc">По имени( Я-А )</option>
       <option value="priceAsc">По цене( по возрастанию)</option>
@@ -12,5 +21,10 @@
     <app-view-products [productsList]="productsList">
 
     </app-view-products>
+
+    <div class="catalog__buttons">
+      <button  class="catalog__button" [disabled]="pageNumber === 1" [ngClass]="{disabled: pageNumber === 1}" (click)="pageChange(-1)"> Пред. </button>
+      <button  class="catalog__button" (click)="pageChange(1)"  [disabled]="productsList.length < 8 || pageNumber === 2" [ngClass]="{disabled: pageNumber === 2}"> След. </button>
+    </div>
   </div>
 </div>

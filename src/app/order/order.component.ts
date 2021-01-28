@@ -3,11 +3,11 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { switchMap, take, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { NotificationsService } from 'angular2-notifications';
-import { Product } from '../Product';
-import { StoreService } from '../store.service';
-import { CRUDServiceService } from '../crudservice.service';
-import { Shop } from '../Shop';
-import { User } from '../User';
+import { Product } from '../Interfaces/Product';
+import { StoreService } from '../Services/store.service';
+import { CRUDServiceService } from '../Services/crudservice.service';
+import { Shop } from '../Interfaces/Shop';
+import { User } from '../Interfaces/User';
 
 @Component({
   selector: 'app-order',
@@ -98,9 +98,8 @@ export class OrderComponent implements OnInit {
       name: controls.name.value,
       surname: controls.surname.value,
       email: controls.email.value,
-      phone: controls.email.value,
+      phone: controls.phone.value,
       date: new Date().toLocaleDateString('ru-RU', {
-        weekday: 'long',
         year: 'numeric',
         month: 'long',
         day: 'numeric',
@@ -109,6 +108,7 @@ export class OrderComponent implements OnInit {
         second: '2-digit',
       }),
       products: this.cartItems,
+      total: this.total,
     };
     if (this.user.balance > this.total) {
       this.crudServiceService
@@ -135,6 +135,10 @@ export class OrderComponent implements OnInit {
                     this.crudServiceService.beforeLogout.complete();
                     this.cartItems = [];
                     this.total = 0;
+                    this.orderForm.reset();
+                    setTimeout(() => {
+                      this.router.navigate(['/']);
+                    }, 3000);
                     this.crudServiceService.updateUserBalance(
                       'users',
                       this.store.user.uid,

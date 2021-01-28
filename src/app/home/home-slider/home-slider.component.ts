@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Image } from '../../Image';
-import { Link } from '../../Link';
-import { CRUDServiceService } from '../../crudservice.service';
+import { Image } from '../../Interfaces/Image';
+import { Link } from '../../Interfaces/Link';
+import { CRUDServiceService } from '../../Services/crudservice.service';
 
 @Component({
   selector: 'app-home-slider',

@@ -1,8 +1,12 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CRUDServiceService } from '../crudservice.service';
-import { Product } from '../Product';
-import { Query } from '../Query';
+import { switchMap, take, tap } from 'rxjs/operators';
+import { NotificationsService } from 'angular2-notifications';
+import { CRUDServiceService } from '../Services/crudservice.service';
+import { Product } from '../Interfaces/Product';
+import { Query } from '../Interfaces/Query';
+import { Shop } from '../Interfaces/Shop';
+import { StoreService } from '../Services/store.service';
 
 @Component({
   selector: 'app-product-page',
@@ -15,6 +19,8 @@ export class ProductPageComponent implements OnInit {
     private router: Router,
     private activeRoute: ActivatedRoute,
     private cdr: ChangeDetectorRef,
+    private store: StoreService,
+    private notification: NotificationsService,
   ) {
     this.activeRoute.params.subscribe((value) => {
       this.id = value.id;
@@ -29,7 +35,6 @@ export class ProductPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProducts();
-    this.cdr.detectChanges();
   }
 
   public getProducts(): void {
@@ -39,7 +44,65 @@ export class ProductPageComponent implements OnInit {
     });
   }
 
+  public CopyLink(): void {
+    const loc = window.location.href;
+    navigator.clipboard
+      .writeText(loc)
+      .then(() => {
+        this.notification.success('Успех', 'Текст добавлен в буфер обмена', {
+          timeOut: 2500,
+          showProgressBar: true,
+          pauseOnHover: true,
+          clickToClose: true,
+        });
+      })
+      .catch((err) => {
+        console.log('Something went wrong', err);
+      });
+  }
+
   public addToCart(): void {
-    console.log(this.product.id);
+    if (this.store.user) {
+      this.crudServiceService
+        .getQueryMultipleData('shops', {
+          firstFieldPath: 'userID',
+          firstValue: this.store.user.uid,
+          secondFieldPath: 'status',
+          secondValue: 'active',
+        })
+        .pipe(
+          switchMap((value1: Shop[]) => {
+            const shopCart: Shop = value1[0];
+            if (!shopCart) {
+              return this.crudServiceService.createEntity('shops', {
+                cart: [this.product],
+                userID: this.store.user.uid,
+                status: 'active',
+              });
+            }
+            shopCart.cart.push(this.product);
+            this.notification.success('Успех', 'Товар успешно добавлен в корзину', {
+              timeOut: 2500,
+              showProgressBar: true,
+              pauseOnHover: true,
+              clickToClose: true,
+            });
+            return this.crudServiceService.updateCart('shops', shopCart.id, shopCart.cart);
+          }),
+          tap((value: string) => {
+            this.store.shop = { id: value };
+          }),
+          take(1),
+        )
+        .subscribe();
+    } else {
+      this.notification.error('Ошибка', 'Сначала войдите в аккаунт', {
+        timeOut: 2500,
+        showProgressBar: true,
+        pauseOnHover: true,
+        clickToClose: true,
+      });
+      this.router.navigate(['/login']);
+    }
   }
 }

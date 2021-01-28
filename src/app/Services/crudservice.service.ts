@@ -3,8 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { from, Observable, Subject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import firebase from 'firebase';
-import { Query } from './Query';
-import { Shop } from './Shop';
+import { Query } from '../Interfaces/Query';
+import { Shop } from '../Interfaces/Shop';
 import firestore = firebase.firestore;
 import DocumentReference = firebase.firestore.DocumentReference;
 import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
@@ -61,12 +61,17 @@ export class CRUDServiceService {
 
   public getFilteredPriceProducts<T>(
     collectionName: string,
-    { fieldPath = 'price', minValue = 35, maxValue = 110, limit = 6 },
+    { fieldPath = 'price', minValue = 35, maxValue = 110, limit = 6, startAt = 1, endAt = 8 },
   ): Observable<T[]> {
     return this.firestoreService
       .collection(collectionName, (ref) => {
         const query: firestore.Query = ref;
-        return query.where(fieldPath, '>=', minValue).where(fieldPath, '<=', maxValue).limit(limit);
+        return query
+          .where(fieldPath, '>=', minValue)
+          .where(fieldPath, '<=', maxValue)
+          .orderBy('price')
+          .startAt(startAt)
+          .limit(limit);
       })
       .snapshotChanges()
       .pipe(
@@ -85,12 +90,32 @@ export class CRUDServiceService {
     collectionName: string,
     queryTitle: string,
     queryDirection: OrderByDirection,
-    limit: number,
+    limit = 10,
+    startAt = 1,
   ): Observable<T[]> {
     return this.firestoreService
       .collection(collectionName, (ref) => {
         const query: firestore.Query = ref;
         return query.orderBy(`${queryTitle}`, queryDirection).limit(limit);
+      })
+      .snapshotChanges()
+      .pipe(
+        map((actions) =>
+          actions.map((a) => {
+            const data: any = a.payload.doc.data();
+            const { id } = a.payload.doc;
+            return { id, ...data } as T;
+          }),
+        ),
+        take(1),
+      );
+  }
+
+  public getCollectionItems<T>(collectionName: string, value: string): Observable<T[]> {
+    return this.firestoreService
+      .collection(collectionName, (ref) => {
+        const query: firestore.Query = ref;
+        return query.where('collection', '==', value);
       })
       .snapshotChanges()
       .pipe(

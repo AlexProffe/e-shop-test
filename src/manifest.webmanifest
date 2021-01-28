@@ -1,8 +1,8 @@
 {
-  "name": "FirstAngApp",
-  "short_name": "FirstAngApp",
+  "name": "E-Shop",
+  "short_name": "E-Shop",
   "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "background_color": "lightgray",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",

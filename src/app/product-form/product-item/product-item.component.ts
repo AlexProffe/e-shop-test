@@ -3,12 +3,12 @@ import { Router } from '@angular/router';
 import firebase from 'firebase';
 import { switchMap, take, tap } from 'rxjs/operators';
 import { NotificationsService } from 'angular2-notifications';
-import { Product } from '../../Product';
-import { CRUDServiceService } from '../../crudservice.service';
-import { Image } from '../../Image';
-import { StoreService } from '../../store.service';
-import { Shop } from '../../Shop';
-import { Wishlist } from '../../Wishlist';
+import { Product } from '../../Interfaces/Product';
+import { CRUDServiceService } from '../../Services/crudservice.service';
+import { Image } from '../../Interfaces/Image';
+import { StoreService } from '../../Services/store.service';
+import { Shop } from '../../Interfaces/Shop';
+import { Wishlist } from '../../Interfaces/Wishlist';
 
 @Component({
   selector: 'app-product-item',

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import firebase from 'firebase';
 import { switchMap, take, tap } from 'rxjs/operators';
-import { StoreService } from '../../store.service';
-import { CRUDServiceService } from '../../crudservice.service';
+import { StoreService } from '../../Services/store.service';
+import { CRUDServiceService } from '../../Services/crudservice.service';
+
 import User = firebase.User;
 
 @Component({
@@ -20,8 +21,7 @@ export class InfoComponent implements OnInit {
   ngOnInit(): void {
     this.storeService.user$
       .pipe(
-        switchMap((value) => {
-          console.log(value);
+        switchMap((value: User) => {
           return this.crudServiceService.getQueryData('users', {
             fieldPath: 'uid',
             value: value.uid,
@@ -33,7 +33,6 @@ export class InfoComponent implements OnInit {
         if (this.user) {
           this.show = true;
         }
-        console.log(this.user, value1[0]);
       });
   }
 }

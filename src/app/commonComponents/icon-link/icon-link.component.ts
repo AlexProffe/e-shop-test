@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Link } from '../../Link';
-import { Icon } from '../../Icon';
+import { Link } from '../../Interfaces/Link';
+import { Icon } from '../../Interfaces/Icon';
 
 @Component({
   selector: 'app-icon-link',

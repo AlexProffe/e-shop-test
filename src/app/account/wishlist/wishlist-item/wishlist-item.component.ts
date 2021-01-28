@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Product } from '../../../Product';
-import { Wishlist } from '../../../Wishlist';
-import { CRUDServiceService } from '../../../crudservice.service';
-import { StoreService } from '../../../store.service';
+import { Product } from '../../../Interfaces/Product';
+import { Wishlist } from '../../../Interfaces/Wishlist';
+import { CRUDServiceService } from '../../../Services/crudservice.service';
+import { StoreService } from '../../../Services/store.service';
 
 @Component({
   selector: 'app-wishlist-item',

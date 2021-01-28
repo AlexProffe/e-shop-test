@@ -17,12 +17,12 @@ import {
   takeWhile,
   tap,
 } from 'rxjs/operators';
-import { Link } from '../../Link';
-import { Icon } from '../../Icon';
-import { Product } from '../../Product';
-import { StoreService } from '../../store.service';
-import { CRUDServiceService } from '../../crudservice.service';
-import { Shop } from '../../Shop';
+import { Link } from '../../Interfaces/Link';
+import { Icon } from '../../Interfaces/Icon';
+import { Product } from '../../Interfaces/Product';
+import { StoreService } from '../../Services/store.service';
+import { CRUDServiceService } from '../../Services/crudservice.service';
+import { Shop } from '../../Interfaces/Shop';
 
 @Component({
   selector: 'app-menu',

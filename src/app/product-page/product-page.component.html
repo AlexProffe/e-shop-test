@@ -13,11 +13,22 @@
         </div>
 
         <div class="product__wrapper__buttons">
-          <button class="product__wrapper__button" (click)="addToCart()"> в корзину</button>
+          <button class="product__wrapper__button" (click)="addToCart()">Add to Cart</button>
+          <button class="product__wrapper__button" (click)="CopyLink()">Share Product</button>
         </div>
       </div>
 
     </div>
+    <div class="product__options" *ngIf="!loading">
+      <h2 class="product__options__title">Product Info</h2>
+     <ng-container *ngFor="let item of product.options">
+       <div class="product__option">
+         <div class="product__option__name product__option__common">{{item.name}}</div>
+         <div class="product__option__value product__option__common">{{item.value}}</div>
+       </div>
+     </ng-container>
+    </div>
 
   </div>
 </div>
+<simple-notifications></simple-notifications>

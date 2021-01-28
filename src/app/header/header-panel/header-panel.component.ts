@@ -2,12 +2,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import firebase from 'firebase';
 import { filter, switchMap, tap } from 'rxjs/operators';
-import { Icon } from '../../Icon';
-import { Link } from '../../Link';
-import { AuthService } from '../../auth.service';
-import { StoreService } from '../../store.service';
-import { CRUDServiceService } from '../../crudservice.service';
-import { Shop } from '../../Shop';
+import { Icon } from '../../Interfaces/Icon';
+import { Link } from '../../Interfaces/Link';
+import { AuthService } from '../../Services/auth.service';
+import { StoreService } from '../../Services/store.service';
+import { CRUDServiceService } from '../../Services/crudservice.service';
+import { Shop } from '../../Interfaces/Shop';
 
 @Component({
   selector: 'app-header-panel',

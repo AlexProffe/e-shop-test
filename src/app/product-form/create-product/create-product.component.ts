@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { CRUDServiceService } from '../../crudservice.service';
-import { Product } from '../../Product';
+import { CRUDServiceService } from '../../Services/crudservice.service';
+import { Product } from '../../Interfaces/Product';
 
 @Component({
   selector: 'app-create-product',

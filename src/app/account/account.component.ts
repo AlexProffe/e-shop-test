@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { SidebarItem } from '../SidebarItem';
+import { SidebarItem } from '../Interfaces/SidebarItem';
 
 @Component({
   selector: 'app-account',

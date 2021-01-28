@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnChanges, OnInit } from '@angular/core';
-import { CRUDServiceService } from '../../crudservice.service';
-import { Product } from '../../Product';
-import { Book } from '../../Book';
+import { CRUDServiceService } from '../../Services/crudservice.service';
+import { Product } from '../../Interfaces/Product';
+import { Book } from '../../Interfaces/Book';
 
 @Component({
   selector: 'app-view-products',

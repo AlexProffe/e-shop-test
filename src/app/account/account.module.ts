@@ -9,7 +9,7 @@ import { InfoComponent } from './info/info.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrdersComponent } from './orders/orders.component';
 import { ViewOrderComponent } from './view-order/view-order.component';
-import { AuthGuardService } from '../auth-guard.service';
+import { AuthGuardService } from '../Services/auth-guard.service';
 
 const accountRoutes: Routes = [
   {

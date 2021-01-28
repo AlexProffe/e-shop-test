@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import firebase from 'firebase';
 import { switchMap } from 'rxjs/operators';
-import { AuthService } from '../auth.service';
-import { StoreService } from '../store.service';
-import { CRUDServiceService } from '../crudservice.service';
-import { Shop } from '../Shop';
+import { AuthService } from '../Services/auth.service';
+import { StoreService } from '../Services/store.service';
+import { CRUDServiceService } from '../Services/crudservice.service';
+import { Shop } from '../Interfaces/Shop';
 
 @Component({
   selector: 'app-login',

@@ -3,11 +3,8 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { from, Observable, Subject } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import firebase from 'firebase';
-import { Query } from '../Interfaces/Query';
-import { Shop } from '../Interfaces/Shop';
 import firestore = firebase.firestore;
 import DocumentReference = firebase.firestore.DocumentReference;
-import DocumentSnapshot = firebase.firestore.DocumentSnapshot;
 import OrderByDirection = firebase.firestore.OrderByDirection;
 
 @Injectable({
@@ -205,7 +202,7 @@ export class CRUDServiceService {
       this.firestoreService
         .collection(collectionName)
         .doc(id)
-        .set({ cart: value }, { merge: true }),
+        .set({ cart: value }, { merge: true })
     ).pipe(
       map(() => id),
       take(1),

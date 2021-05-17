@@ -9,6 +9,7 @@ import { CRUDServiceService } from './crudservice.service';
 import { StoreService } from './store.service';
 import auth = firebase.auth;
 import UserCredential = firebase.auth.UserCredential;
+import User = firebase.User;
 @Injectable({
   providedIn: 'root',
 })
@@ -49,7 +50,7 @@ export class AuthService {
     return from(this.angAuthService.signOut()).pipe(take(1));
   }
 
-  private updateUserData(user) {
+  private updateUserData(user: User) {
     const userRef: AngularFirestoreDocument<any> = this.firestoreService.doc(`users/${user.uid}`);
     const data = {
       uid: user.uid,

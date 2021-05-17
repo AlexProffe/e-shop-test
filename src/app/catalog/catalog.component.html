@@ -10,13 +10,13 @@
       <option value="priceDesc">По цене( по убыванию)</option>
       <option value="sale">Акционные</option>
     </select>
-    <select name="sorts"  id="sort" (change)="filter($event)">
+    <select name="sorts"  id="sort" (change)="sort($event)">
       <option value="default" selected disabled>Коллекция </option>
-      <option value="nameAsc">По имени( А-Я)</option>
-      <option value="nameDesc">По имени( Я-А )</option>
-      <option value="priceAsc">По цене( по возрастанию)</option>
-      <option value="priceDesc">По цене( по убыванию)</option>
-      <option value="sale">Акционные</option>
+      <option value="Hybrid Theory">Hybrid Theory</option>
+      <option value="Hybrid Theory Annivercery">Hybrid Theory Annivercery</option>
+      <option value="Meteora">Meteora</option>
+      <option value="Minutes to Midnight">Minutes to Midnight</option>
+      <option value="One More Light">One More Light</option>
     </select>
     <app-view-products [productsList]="productsList">
 

@@ -22,8 +22,9 @@ export class ProductPageComponent implements OnInit {
     private store: StoreService,
     private notification: NotificationsService,
   ) {
-    this.activeRoute.params.subscribe((value) => {
-      this.id = value.id;
+    this.activeRoute.params.subscribe((params) => {
+      this.id = params.id;
+      console.log(params);
     });
   }
 
